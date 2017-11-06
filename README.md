@@ -2,9 +2,15 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.0.
 
+## Start
+Run `npm install` for install nodepackage.
+Run `npm run build:ssr` for generate ./dist/ssr paht.
+Run `npm run serve:ssr` for test product version fine open web brower `localhost:8000` for check.
+
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `npm run server:dev` for a dev server.
+Run `npm run cliend:dev` for a dev. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
 

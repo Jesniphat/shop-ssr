@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { BrowserModule, Meta, Title } from "@angular/platform-browser";
+import { BrowserModule, Meta, Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 
-import { ApiService } from "../../service/api.service";
+import { ApiService } from '../../service/api.service';
 import { MenuListService } from '../../service/menu-list.service';
 
 @Component({
@@ -15,14 +15,14 @@ export class ManagerSideComponent implements OnInit {
   public menuLists = [];
 
   constructor(
-    public meta: Meta, 
-    public title: Title, 
-    private apiService:ApiService,
+    public meta: Meta,
+    public title: Title,
+    private apiService: ApiService,
     private menuListService: MenuListService,
-    private router:Router
+    private router: Router
   ) {
     title.setTitle('My Spiffy Home Page');
-    
+
     meta.addTags([
       { name: 'author',   content: 'Coursetro.com'},
       { name: 'keywords', content: 'angular seo, angular 4 universal, etc'},
@@ -35,20 +35,20 @@ export class ManagerSideComponent implements OnInit {
     this.menuListService.getMenuList(true, 'system');
   }
 
-  public pingDoneAction(data:any){
+  public pingDoneAction(data: any) {
     // console.log("OK");
   }
 
-  public pingErrorAction(error:any){
+  public pingErrorAction(error: any) {
     console.log(error);
-  }  
+  }
 
   public w3_open() {
-    document.getElementById("mySidebar").style.display = "block";
+    document.getElementById('mySidebar').style.display = 'block';
   }
 
   public w3_close() {
-    document.getElementById("mySidebar").style.display = "none";
+    document.getElementById('mySidebar').style.display = 'none';
   }
 
   public menu(data){

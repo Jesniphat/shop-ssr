@@ -9,8 +9,9 @@ Run `npm run serve:ssr` for test product version fine open web brower `localhost
 
 ## Development server
 
-Run `npm run server:dev` for a dev server.
 Run `npm run cliend:dev` for a dev. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `npm run server:dev` for a dev server.
+!Away Run cliend first.
 
 ## Code scaffolding
 

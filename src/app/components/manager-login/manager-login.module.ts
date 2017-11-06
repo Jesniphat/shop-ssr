@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpModule } from "@angular/http";
+import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 
-import { SharedModule } from "../../shared/shared.module";
+import { SharedModule } from '../../shared/shared.module';
 import { ManagerLoginComponent } from './manager-login.component';
-import { routing } from "./manager-login.routing";
+import { Routing } from './manager-login.routing';
 
 @NgModule({
   imports: [
@@ -15,7 +15,7 @@ import { routing } from "./manager-login.routing";
     BrowserModule,
     FormsModule,
     SharedModule,
-    routing
+    Routing
   ],
   declarations: [
     ManagerLoginComponent

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BrowserModule, Title, Meta } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ApiService } from "../../service/api.service";
+import { ApiService } from '../../service/api.service';
 
 @Component({
   selector: 'app-manager-login',
@@ -10,7 +10,7 @@ import { ApiService } from "../../service/api.service";
   styleUrls: ['./manager-login.component.scss']
 })
 export class ManagerLoginComponent implements OnInit {
-  msgs:any;
+  msgs: any;
   error: any;
   response: {};
   password: any;
@@ -18,13 +18,13 @@ export class ManagerLoginComponent implements OnInit {
   storage: any;
 
   constructor(
-    public apiService: ApiService, 
-    public title: Title, 
+    public apiService: ApiService,
+    public title: Title,
     public meta: Meta,
     public router: Router
   ) {
     title.setTitle('Login to my shop');
-    
+
     meta.addTags([
       { name: 'author',   content: 'jesseshop.com'},
       { name: 'keywords', content: 'jesse shop online, angular 5 universal, etc'},
@@ -38,56 +38,57 @@ export class ManagerLoginComponent implements OnInit {
     this.getLogin();
   }
 
-  getLogin(){
-    let param = {"clear":"login"};
+  getLogin() {
+    const param = {'clear': 'login'};
     this.apiService
-        .post("/api/authen/clearlogin", param)
+        .post('/api/authen/clearlogin', param)
         .subscribe(
             res => this.getLoginDoneAction(res),
             error => this.getLoginErrorAction(error)
         );
   }
 
-  getLoginDoneAction(res:any){
+  getLoginDoneAction(res: any) {
     // console.log("res login = ", res);
   }
 
-  getLoginErrorAction(error:any){
+  getLoginErrorAction(error: any) {
       this.error = error.message;
   }
 
-  login(){
-    let param = {
+  login() {
+    const param = {
       user: this.username,
       password: this.password
-    }
+    };
+
     this.apiService
-      .post("/api/authen/login", param)
+      .post('/api/authen/login', param)
       .subscribe(
           (res) => this.loginDoneAction(res),
           (error) => this.loginErrorAction(error)
-      )
+      );
   }
 
-  loginDoneAction(res:any){
+  loginDoneAction(res: any) {
     // console.log(" res = ", res);
-    if(res.status === true){
-        let loginData = JSON.stringify(res.data);
-        this.storage.setItem('logindata',loginData);
+    if ( res.status === true) {
+        const loginData = JSON.stringify(res.data);
+        this.storage.setItem('logindata', loginData);
         this.router.navigate(['/manager']);
         // this.$rootScope.loginShow({hiddenTopBar:false, hiddenSideBar:false});
         // window.location.href = "";
         // window.location.reload();
     } else {
-        console.log("can't login = ", res.error);
+        console.log('can nott login = ', res.error);
         this.msgs = [];
-        this.msgs.push({severity:'warn', summary:'Oops!', detail:res.error});
+        this.msgs.push({severity: 'warn', summary: 'Oops!', detail: res.error});
     }
   }
 
-  loginErrorAction(error:any){
+  loginErrorAction(error: any) {
     this.error = error.message;
-    console.log("error = ", this.error);
+    console.log('error = ', this.error);
     // setTimeout(() => this.error = null, 4000);
   }
 

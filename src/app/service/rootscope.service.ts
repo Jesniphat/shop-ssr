@@ -6,8 +6,8 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 export class RootscopeService {
   // Observable navItem source
   // public data:any;
-  public doBlock$:Observable<any>;
-  public showNav$:Observable<any>;
+  public doBlock$: Observable<any>;
+  public showNav$: Observable<any>;
 
   private _blockUI: any;
   private _showNav: any;
@@ -18,13 +18,13 @@ export class RootscopeService {
   }
 
   // service command
-  public loginShow(someObj:any) {
+  public loginShow(someObj: any) {
     this._showNav.next(someObj);
   }
 
-  public setBlock(data:boolean) {
+  public setBlock(data: boolean) {
     this._blockUI.next({
-      block:data
+      block: data
     });
   }
 }

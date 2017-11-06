@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpModule } from "@angular/http";
+import { HttpModule } from '@angular/http';
 
-import { routing } from './manager-side.routing';
-import { SharedModule } from "../../shared/shared.module";
+import { Routing } from './manager-side.routing';
+import { SharedModule } from '../../shared/shared.module';
 
 import { ManagerSideComponent } from './manager-side.component';
 
@@ -12,7 +12,7 @@ import { ManagerSideComponent } from './manager-side.component';
     CommonModule,
     HttpModule,
     SharedModule,
-    routing
+    Routing
   ],
   declarations: [
     ManagerSideComponent

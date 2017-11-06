@@ -1,10 +1,10 @@
-import { NgModule ,ModuleWithProviders } from '@angular/core';
+import { NgModule , ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { ApiService } from "../service/api.service";
-import { RootscopeService } from "../service/rootscope.service";
-import { CookieService } from "../service/cookie.service";
-import { DialogService } from "../service/dialog.service";
+import { ApiService } from '../service/api.service';
+import { RootscopeService } from '../service/rootscope.service';
+import { CookieService } from '../service/cookie.service';
+import { DialogService } from '../service/dialog.service';
 import { ProductStorageService } from '../service/product-storage.service';
 import { MenuListService } from '../service/menu-list.service';
 

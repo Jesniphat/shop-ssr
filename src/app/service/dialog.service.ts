@@ -7,7 +7,7 @@ export class DialogService {
 
   constructor() {}
 
-  public build(element){
+  public build(element) {
     this.$dialog = element;
     if (!this.$dialog.showModal) {
       dialogPolyfill.registerDialog(this.$dialog);

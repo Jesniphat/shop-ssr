@@ -3,8 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
-import { SharedModule }     from './shared/shared.module';
-import { routing }          from './app.routing';
+import { SharedModule } from './shared/shared.module';
+import { Routing } from './app.routing';
 
 import { ManagerLoginModule } from './components/manager-login/manager-login.module';
 import { ManagerSideModule } from './components/manager-side/manager-side.module';
@@ -21,7 +21,7 @@ import './rxjs-operators';
     BrowserModule.withServerTransition({appId: 'shop'}),
     FormsModule,
     HttpModule,
-    routing,
+    Routing,
     SharedModule,
     ManagerLoginModule,
     ManagerSideModule

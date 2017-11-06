@@ -69,8 +69,7 @@ router.post("/login", function(req, res, next) {
         password: $scope.password
       }
     });
-  })
-  .catch((error) => {
+  }).catch((error) => {
     res.json({
       status: false,
       error: error

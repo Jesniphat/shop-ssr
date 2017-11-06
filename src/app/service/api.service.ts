@@ -1,22 +1,22 @@
 import { Injectable } from '@angular/core';
-import { Http, HttpModule, Headers, RequestOptions, Response  }    from '@angular/http';
+import { Http, HttpModule, Headers, RequestOptions, Response  } from '@angular/http';
 import { Router } from '@angular/router';
-import { Observable }     from 'rxjs/Observable';
-import { ResponseData }     from './constructor-variable';
+import { Observable } from 'rxjs/Observable';
+import { ResponseData } from './constructor-variable';
 
 
 @Injectable()
 export class ApiService {
-    private prod:boolean = false; 
+    private prod = false;
     // public api:string = "http://127.0.0.1/project_shop_api/api.php";
     // public upl:string = "http://127.0.0.1/project_shop_api/upload.php";
-    public api:string = "";
-    public upl:string = "";
-    public img:string = "http://localhost:8100/";
+    public api = '';
+    public upl = '';
+    public img = 'http://localhost:8100/';
     // public img:string = "http://192.168.99.100/";
 
   constructor(private http: Http, public router: Router) {
-    //   console.log(location.hostname); 
+    //   console.log(location.hostname);
     //   if(location.hostname == 'localhost'){
     //       this.api = "";
     //       this.upl = "";
@@ -28,30 +28,30 @@ export class ApiService {
     //   }
   }
 
-    get(url: string):Observable<ResponseData> {
+    get(url: string): Observable<ResponseData> {
         return this.http
                 .get( this.api + url)
                 .map((response: Response) => this.extractData(response)) // .map(this.extractData)
                 .catch(this.handleError);
     }
 
-    post(url: string, param:any):Observable<ResponseData> {
+    post(url: string, param: any): Observable<ResponseData> {
         return this.http
                 .post(this.api + url, JSON.stringify(param), new RequestOptions({
-                    headers: new Headers({"Content-Type": "application/json"})
+                    headers: new Headers({'Content-Type': 'application/json'})
                 }))
                 .map((response: Response) => this.extractData(response)) // .map(this.extractData)
                 .catch(this.handleError);
     }
 
     public extractData(res: Response) {
-        let body = res.json();
-        if(body.nologin){
-            console.log("go to new login.");
+        const body = res.json();
+        if (body.nologin) {
+            console.log('go to new login.');
             // window.location.href = "#/system-login";
             this.router.navigate(['/system-login']);
-            return body || { }; 
-        }else{
+            return body || { };
+        }else {
             // console.log("body = ", body);
             return body || { };
         }

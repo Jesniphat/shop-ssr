@@ -11,7 +11,11 @@ let fs = require('fs');
 // var bodyParser  = require('body-parser');
 let moment = require('moment');
 let multer = require('multer');
-let uploadFile = multer({ dest: __dirname + '/tmp/' });
+let dir = './tmp/';
+if (!fs.existsSync(dir)){
+  fs.mkdirSync(dir);
+}
+let uploadFile = multer({ dest: './tmp/' });
 // console.log(uploadFile);
 
 /* GET users listing. */
@@ -22,8 +26,12 @@ upload.post('/product', uploadFile.single('file'), function (req, res, next) {
   let save_file = function(){
     let deferred = promise.pending();
     let newName = moment().format('YYYY-MM-DD_hh-mm-ss') + '_' + req.file.originalname;
-    // let filename = __dirname + '/../dist/public/images/product-img/' + newName;
-    let filename = __dirname + './dist/public/images/product-img/' + newName;
+
+    let dirImg = __dirname + '/../public/images/product-img/'
+    if (!fs.existsSync(dirImg)) {
+      fs.mkdirSync(dirImg);
+    }
+    let filename = __dirname + dirImg + newName;
     let src = fs.createReadStream(req.file.path);
     src.pipe(fs.createWriteStream(filename));
     src.on('end', function () {
@@ -112,7 +120,12 @@ upload.post('/category', uploadFile.single('file'), function (req, res, next) {
   let save_file = function(){
     let deferred = promise.pending();
     let newName = moment().format('YYYY-MM-DD_hh-mm-ss') + '_' + req.file.originalname;
-    let filename = __dirname + '/../dist/public/images/category-img/' + newName;
+    
+    let dirImg = __dirname + '/../public/images/category-img/';
+    if (!fs.existsSync(dirImg)) {
+      fs.mkdirSync(dirImg);
+    }
+    let filename = __dirname + dirImg + newName;
     let src = fs.createReadStream(req.file.path);
     src.pipe(fs.createWriteStream(filename));
     src.on('end', function () {

@@ -28,12 +28,12 @@ enableProdMode();
 // Express server
 const app = express();
 
-const PORT = process.env.PORT || 8100;
+const PORT = process.env.PORT || 8000;
 const DIST_FOLDER = join(process.cwd(), 'dist');
 
-// Our index.html we'll use as our template
-let template = "";
+let template = '';
 if(process.env.PROD == 'production'){
+  // Our index.html we'll use as our template
   template = readFileSync(join(DIST_FOLDER, 'browser', 'index.html')).toString();
 }
 

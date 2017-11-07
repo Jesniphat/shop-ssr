@@ -6,6 +6,8 @@ import { Routing } from './manager-side.routing';
 import { SharedModule } from '../../shared/shared.module';
 
 import { ManagerSideComponent } from './manager-side.component';
+import { ManagerDashboardComponent } from './manger-dashboard/manager-dashboard/manager-dashboard.component';
+import { CategoryListComponent } from './category/category-list/category-list.component';
 
 @NgModule({
   imports: [
@@ -15,7 +17,9 @@ import { ManagerSideComponent } from './manager-side.component';
     Routing
   ],
   declarations: [
-    ManagerSideComponent
+    ManagerSideComponent,
+    ManagerDashboardComponent,
+    CategoryListComponent
   ],
   bootstrap: [
     ManagerSideComponent

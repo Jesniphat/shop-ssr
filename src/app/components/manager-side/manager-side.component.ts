@@ -15,20 +15,10 @@ export class ManagerSideComponent implements OnInit {
   public menuLists = [];
 
   constructor(
-    public meta: Meta,
-    public title: Title,
     private apiService: ApiService,
     private menuListService: MenuListService,
     private router: Router
-  ) {
-    title.setTitle('My Spiffy Home Page');
-
-    meta.addTags([
-      { name: 'author',   content: 'Coursetro.com'},
-      { name: 'keywords', content: 'angular seo, angular 4 universal, etc'},
-      { name: 'description', content: 'This is my Angular SEO-based App, enjoy it!' }
-    ]);
-  }
+  ) {}
 
   public ngOnInit() {
     this.menuListService.$menuList.subscribe(data => this.menu(data));

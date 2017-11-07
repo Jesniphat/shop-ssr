@@ -51,7 +51,7 @@ export class ManagerSideComponent implements OnInit {
     document.getElementById('mySidebar').style.display = 'none';
   }
 
-  public menu(data){
+  public menu(data) {
     this.menuLists = data;
   }
 

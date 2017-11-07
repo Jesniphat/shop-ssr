@@ -98,12 +98,12 @@ upload.post('/product', uploadFile.single('file'), function (req, res, next) {
   save_file()
   .then(insert_file_data)
   .then(get_pic)
-  .then(function(){
+  .then(function() {
     res.json({
       status: true,
       data: $scope
     });
-  }).catch(function(e){
+  }).catch(function(e) {
     res.json({
       status: false,
       error: e
@@ -148,7 +148,7 @@ upload.post('/category', uploadFile.single('file'), function (req, res, next) {
 
 
   save_file()
-  .then(function(){
+  .then(function() {
     res.json({
       status: true,
       data: {
@@ -156,7 +156,7 @@ upload.post('/category', uploadFile.single('file'), function (req, res, next) {
         pic_path: "public/images/category-img/"  + $scope.newName
       }
     });
-  }).catch(function(e){
+  }).catch(function(e) {
     res.json({
       status: false,
       error: e

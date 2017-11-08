@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Http, HttpModule, Headers, RequestOptions, Response  } from '@angular/http';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 
@@ -22,33 +21,32 @@ export class ApiService {
 
   constructor(
     private http: HttpClient,
-    private https: Http,
     private router: Router
   ) {}
 
-	/** GET data from the server */
-    get(url: string): Observable<ResponseData> {
-			return this.http
-			.get<ResponseData>( this.api + url)
-			.pipe(
-				tap((res: ResponseData) => this.extractData(res)),
-				catchError(this.handleError<ResponseData>('GetApi'))
-			);
-		}
+/** GET data from the server */
+  get(url: string): Observable<ResponseData> {
+    return this.http
+      .get<ResponseData>( this.api + url)
+      .pipe(
+        tap((res: ResponseData) => this.access(res)),
+        catchError(this.handleError<ResponseData>('GetApi'))
+      );
+    }
 
-		//////// Save methods //////////
- 
+    //////// Save methods //////////
+
   /** POST: add a new hero to the server */
     post(url: string, param: any): Observable<ResponseData> {
       return this.http
-			.post<ResponseData>(this.api + url, JSON.stringify(param), httpOptions)
-			.pipe(
-				tap((res: ResponseData) => this.extractData(res)),
-				catchError(this.handleError<ResponseData>('PostApi'))
-			);
+      .post<ResponseData>(this.api + url, JSON.stringify(param), httpOptions)
+      .pipe(
+        tap((res: ResponseData) => this.access(res)),
+        catchError(this.handleError<ResponseData>('PostApi'))
+      );
     }
 
-    public extractData(res: any) {
+    public access(res: any) {
         if (res.nologin) {
             console.log('go to new login.');
             this.router.navigate(['/system-login']);
@@ -58,6 +56,7 @@ export class ApiService {
             return res || { };
         }
     }
+
   /**
 	 * Handle Http operation that failed.
    * Let the app continue.

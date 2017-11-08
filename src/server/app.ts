@@ -32,7 +32,7 @@ const PORT = process.env.PORT || 8000;
 const DIST_FOLDER = join(process.cwd(), 'dist');
 
 let template = '';
-if(process.env.PROD == 'production'){
+if (process.env.PROD === 'production') {
   // Our index.html we'll use as our template
   template = readFileSync(join(DIST_FOLDER, 'browser', 'index.html')).toString();
 }

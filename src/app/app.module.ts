@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import { SharedModule } from './shared/shared.module';
 import { Routing } from './app.routing';
@@ -21,6 +22,7 @@ import './rxjs-operators';
     BrowserModule.withServerTransition({appId: 'shop'}),
     FormsModule,
     HttpModule,
+    HttpClientModule,
     Routing,
     SharedModule,
     ManagerLoginModule,

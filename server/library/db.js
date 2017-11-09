@@ -1,5 +1,4 @@
 // let conn = require('./config');
-
 module.exports = new function() {
   this.BeginTransaction = function(connection, success, errors){
     connection.beginTransaction(function(err) {

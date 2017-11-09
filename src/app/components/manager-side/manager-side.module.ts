@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 
-import { NgxDatatableModule } from '@swimlane/ngx-datatable/src';
 import { Uploader } from 'angular2-http-file-upload';
 
 import { SharedModule } from '../../shared/shared.module';
@@ -18,7 +17,6 @@ import { CategoryListComponent } from './category/category-list/category-list.co
     CommonModule,
     BrowserModule,
     FormsModule,
-    NgxDatatableModule,
     SharedModule,
     Routing
   ],

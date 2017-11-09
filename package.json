@@ -30,7 +30,6 @@
     "@angular/platform-server": "^5.0.0",
     "@angular/router": "^5.0.0",
     "@nguniversal/module-map-ngfactory-loader": "^1.0.0-beta.3",
-    "@swimlane/ngx-datatable": "^11.0.3",
     "angular2-http-file-upload": "^1.0.6",
     "bluebird": "^3.5.1",
     "concurrently": "^3.5.0",

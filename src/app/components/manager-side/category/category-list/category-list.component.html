@@ -17,37 +17,7 @@
   <br/>
   
   <div class="w3-row">
-    <ngx-datatable
-      #mydatatable
-      class="material category-table w3-col l12 m12 s12"
-      [headerHeight]="50"
-      [limit]="5"
-      [columnMode]="'flex'"
-      [footerHeight]="50"
-      [rowHeight]="'auto'"
-      [rows]="categoryLists | tableFilter:filterText">
-      <ngx-datatable-column name="Category Name" prop="cate_name" [flexGrow]="2">
-        <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
-          <span title="Double click to edit">
-            {{value}}
-          </span>
-        </ng-template>
-      </ngx-datatable-column>
-      <ngx-datatable-column name="Category Description" prop="cate_description" [flexGrow]="3">
-        <ng-template ngx-datatable-cell-template let-row="row" let-value="value">
-          <span title="Double click to edit" >
-            {{value}}
-          </span>
-        </ng-template>
-      </ngx-datatable-column>
-      <ngx-datatable-column name="Action" prop="id" [flexGrow]="1" headerClass="ngx-text-center" cellClass="ngx-text-center">
-        <ng-template ngx-datatable-cell-template let-row="row" let-value="value">
-            <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored" (click)="add_new_category(value)">
-              <i class="material-icons">mode_edit</i>
-            </button>
-        </ng-template>
-      </ngx-datatable-column>
-    </ngx-datatable>
+    <!-- table here -->
   </div>
 
 </div>

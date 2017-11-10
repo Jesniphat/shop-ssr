@@ -1,9 +1,7 @@
-import { Component, OnInit, Input, ElementRef, Inject, AfterViewInit, ViewChild, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Component, OnInit, Input, ElementRef, Inject, AfterViewInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '../../../../service/api.service';
 import { RootscopeService } from '../../../../service/rootscope.service';
-declare const $: any;
 
 @Component({
   selector: 'app-category-list',
@@ -40,7 +38,6 @@ export class CategoryListComponent implements OnInit {
 	 * @return void
 	 */
   constructor(
-    @Inject(PLATFORM_ID) private platformId: object,
     public router: Router,
     public apiService: ApiService,
     public $rootScope: RootscopeService
@@ -54,9 +51,6 @@ export class CategoryListComponent implements OnInit {
 	 */
   public ngOnInit() {
     console.log('category_list.component');
-    if (isPlatformBrowser(this.platformId)) {
-      $('#jquery-text').text('jQuery works!');
-    }
     // this.dialog = this.dialogService.build(document.getElementById('add-cate'));
     this.getCategoryList();
   }

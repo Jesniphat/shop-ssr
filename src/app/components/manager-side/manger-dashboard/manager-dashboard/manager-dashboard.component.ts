@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { BrowserModule, Meta, Title } from '@angular/platform-browser';
+declare const $: any;
 
 @Component({
   selector: 'app-manager-dashboard',
@@ -9,6 +11,7 @@ import { BrowserModule, Meta, Title } from '@angular/platform-browser';
 export class ManagerDashboardComponent implements OnInit {
 
   constructor(
+    @Inject(PLATFORM_ID) private platformId: object,
     public meta: Meta,
     public title: Title
   ) {
@@ -22,6 +25,10 @@ export class ManagerDashboardComponent implements OnInit {
   }
 
   ngOnInit() {
+    // If want to use jQuery in server.
+    if (isPlatformBrowser(this.platformId)) {
+      $('#jquery-text').text('jQuery works!');
+    }
   }
 
 }

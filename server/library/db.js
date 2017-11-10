@@ -1,7 +1,8 @@
-// let conn = require('./config');
-module.exports = new function() {
+const conn = require('./config');
+
+let _database = new function(){
   this.BeginTransaction = function(connection, success, errors){
-    connection.beginTransaction(function(err) {
+    connection.beginTransaction((err) => {
       if (err) {
         errors(err);
       } else {
@@ -28,13 +29,13 @@ module.exports = new function() {
   }
 
   this.SelectAll = function(connection, data, success, errors){
-    var $scrope;
-    // var select_data = function(){
-    var fields = " * ";
-    var where = " 1 = 1 ";
-    var group = "";
-    var order = "";
-    var limit = "";
+    let $scrope;
+    // let select_data = function(){
+    let fields = " * ";
+    let where = " 1 = 1 ";
+    let group = "";
+    let order = "";
+    let limit = "";
 
     if(typeof(data.where) == "object"){
       for(keys in data.where){
@@ -48,7 +49,7 @@ module.exports = new function() {
     order  = (Array.isArray(data.order)) ? " ORDER BY " + (data.order).toString() : (data.order != undefined) ? " ORDER BY " + data.order : "";
     limit  = (data.limit != undefined) ? " LIMIT " + data.limit : "";
 
-    var select = "SELECT " + fields + " FROM " + data.table + " WHERE " + where + group + order + limit;
+    let select = "SELECT " + fields + " FROM " + data.table + " WHERE " + where + group + order + limit;
     // console.log("select data = ", select);
     connection.query(select, function(error, results, fields){
       if(error){
@@ -66,12 +67,12 @@ module.exports = new function() {
   }
 
   this.SelectRow = function(connection, data, success, errors){
-    var $scrope;
-    var fields = " * ";
-    var where = " 1 = 1 ";
-    var group = "";
-    var order = "";
-    var limit = "";
+    let $scrope;
+    let fields = " * ";
+    let where = " 1 = 1 ";
+    let group = "";
+    let order = "";
+    let limit = "";
     
     if(typeof(data.where) == "object"){
       for(keys in data.where){
@@ -85,8 +86,8 @@ module.exports = new function() {
     order  = (Array.isArray(data.order)) ? " ORDER BY " + (data.order).toString() : (data.order != undefined) ? " ORDER BY " + data.order : "";
     limit  = (data.limit != undefined) ? " LIMIT " + data.limit : "";
 
-    var select = "SELECT " + fields + " FROM " + data.table + " WHERE " + where + order + limit;
-    var select_row = connection.query(select, function(error, results, fields){
+    let select = "SELECT " + fields + " FROM " + data.table + " WHERE " + where + order + limit;
+    let select_row = connection.query(select, function(error, results, fields){
       // console.log("sql select row = ", select_row.sql);
       if(error){
         console.log("error : ", error);
@@ -103,7 +104,7 @@ module.exports = new function() {
   }
 
   this.Insert = function(connection, data, success, errors){
-    var $scrope;
+    let $scrope;
     if(typeof(data) == "object"){
       
     } else {
@@ -111,7 +112,7 @@ module.exports = new function() {
       return;
     }
 
-    var insert = "INSERT INTO " + data.table + " SET ? ";
+    let insert = "INSERT INTO " + data.table + " SET ? ";
     var querys = connection.query(insert, data.query, function(error, results, fields) {
       // console.log(querys.sql);
       if (error) {
@@ -125,10 +126,10 @@ module.exports = new function() {
   }
 
   this.Update = function(connection, data, success, errors){
-    var $scrope;
-    var fields = [];
-    var set = [];
-    var where = " WHERE 1 = 1 "; 
+    let $scrope;
+    let fields = [];
+    let set = [];
+    let where = " WHERE 1 = 1 "; 
     for(keys in data.query){
       fields.push(keys + " = ?");
       set.push(data.query[keys]);
@@ -143,8 +144,8 @@ module.exports = new function() {
     }else if (data.where != undefined){
       where += " AND " + data.where;
     }
-    var update = "UPDATE " + data.table + " SET " + fields + where;
-    var querys = connection.query(update, set, function(error, results, fields) {
+    let update = "UPDATE " + data.table + " SET " + fields + where;
+    let querys = connection.query(update, set, function(error, results, fields) {
       // console.log("Update is ", querys.sql);
       if (error) {
         errors(error)
@@ -156,8 +157,8 @@ module.exports = new function() {
   }
 
   this.Delete = function(connection, data, success, errors){
-    var $scrope;
-    var where = " WHERE 1 = 1 ";
+    let $scrope;
+    let where = " WHERE 1 = 1 ";
     if(typeof(data.where) == "object"){
       for(keys in data.where){
         where += " AND " + keys + " = '" + data.where[keys] + "'";
@@ -167,7 +168,7 @@ module.exports = new function() {
     }else{
       errors("You can't delete data by this query");
     }
-    var query = "DELETE FROM " + data.table + where;
+    let query = "DELETE FROM " + data.table + where;
     
     connection.query(query, function(error, results, fields) {
       if (error) {
@@ -178,5 +179,6 @@ module.exports = new function() {
       success($scrope);
     });
   }
-
 }
+
+module.exports = _database;

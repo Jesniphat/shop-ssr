@@ -1,4 +1,4 @@
-module.exports = new function() {
+const _config = new function(){
   var db = null;
   this.init = function(){
     var mysql = require("mysql");
@@ -20,3 +20,5 @@ module.exports = new function() {
     return db;
   }
 }
+
+module.exports = _config;

@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { ApiService } from '../../../../service/api.service';
 import { RootscopeService } from '../../../../service/rootscope.service';
 
+import { TableElementComponent } from '../../table-element/table-element.component';
+
 @Component({
   selector: 'app-category-list',
   templateUrl: './category-list.component.html',
@@ -16,14 +18,14 @@ export class CategoryListComponent implements OnInit {
   public error: any = '';
   // public query: string = '';
   public categoryLists: any = [];
-  public categorys: any = [];
-  public filterText: any = '';
-  public pageNo: any = 1;
-
   public categoryId: any = 'create';
 
-  public testPipes = '';
   public dialog;
+
+  /**
+	 * Set view child from product manage
+	 */
+  @ViewChild(TableElementComponent) private tableElementComponent: TableElementComponent;
 
   /**
 	 * Class constructor
@@ -81,7 +83,11 @@ export class CategoryListComponent implements OnInit {
 	 */
   public getCategoryDoneAction(data: any) {
     this.categoryLists = data.data;
-    console.log(this.categoryLists);
+    const categoryColumn = [
+      {'name': 'Name', 'column': 'cate_name'},
+      {'name': 'Description', 'column': 'cate_description'}
+    ];
+    this.tableElementComponent.getTableDataLists({list: data.data, column: categoryColumn, action: true});
     // this.$rootScope.setBlock(false);
   }
 
@@ -97,10 +103,6 @@ export class CategoryListComponent implements OnInit {
     this.error = error.message;
     console.log('errer = ', this.error);
     // this.$rootScope.setBlock(false);
-  }
-
-  public focusFilter() {
-    this.pageNo = 1;
   }
 
   /**
@@ -130,6 +132,12 @@ export class CategoryListComponent implements OnInit {
     // }
   }
 
-
+  /**
+   * Data return from child table component
+   * @param any event
+   */
+  public tableReturn(event: any) {
+    console.log(event);
+  }
 
 }

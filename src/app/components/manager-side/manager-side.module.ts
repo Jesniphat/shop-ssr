@@ -11,6 +11,7 @@ import { Routing } from './manager-side.routing';
 import { ManagerSideComponent } from './manager-side.component';
 import { ManagerDashboardComponent } from './manger-dashboard/manager-dashboard/manager-dashboard.component';
 import { CategoryListComponent } from './category/category-list/category-list.component';
+import { TableElementComponent } from './table-element/table-element.component';
 
 @NgModule({
   imports: [
@@ -23,7 +24,8 @@ import { CategoryListComponent } from './category/category-list/category-list.co
   declarations: [
     ManagerSideComponent,
     ManagerDashboardComponent,
-    CategoryListComponent
+    CategoryListComponent,
+    TableElementComponent
   ],
   providers: [
     Uploader

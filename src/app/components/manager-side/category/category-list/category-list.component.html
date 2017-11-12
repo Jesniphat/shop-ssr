@@ -6,18 +6,10 @@
   </div>
 
   <br/>
-
-  <div class="w3-row">
-    <div class="w3-col l3 m6 s12">
-      <input class="w3-input w3-border" placeholder="Search..." type="text" 
-       [(ngModel)]="filterText" (focus)="focusFilter()">
-    </div>
-  </div>
-
-  <br/>
   
   <div class="w3-row">
     <!-- table here -->
+    <app-table-element [dataTables]="categoryLists" (tableElementResult)="tableReturn($event)"></app-table-element>    
   </div>
 
 </div>

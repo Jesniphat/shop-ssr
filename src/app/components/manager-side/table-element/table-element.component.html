@@ -1,0 +1,43 @@
+
+  <div class="w3-row">
+    <div class="w3-col l3 m6 s12">
+      <input class="w3-input w3-border" placeholder="Search..." type="text" 
+       [(ngModel)]="filterText" (focus)="focusFilter()">
+    </div>
+  </div>
+
+  <br/>
+  
+  <div class="w3-row">
+    <table class="w3-table-all">
+      <thead>
+        <tr>
+          <th *ngFor="let column of columnList; let key = index" class="head" [ngClass]="column.column" (click)="sortTable($event, column.column)">
+            {{column.name}}
+          </th>
+          <th *ngIf="isAction" style="text-align:center;">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of dataTableLists | tableFilter:filterText | pageNumber:{pageNo:pageNo, row:10} | tableSort:sortTableData">
+          <td *ngFor="let column of columnList; let key = index">
+            {{item[column.column]}}
+          </td>
+          <td *ngIf="isAction" style="text-align:center;">
+            <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored" (click)="add_new_category(item)">
+              <i class="material-icons">mode_edit</i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th>
+            <select class="w3-select" [(ngModel)]="pageNo">
+              <option *ngFor="let page of dataTableLists | tableFilter:filterText | pageList:10" [value]='page'>{{page}}</option>
+            </select>
+          </th>
+        </tr>
+      </tfoot>
+    </table>
+  </div>

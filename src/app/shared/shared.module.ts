@@ -11,11 +11,12 @@ import { MenuListService } from '../service/menu-list.service';
 import { TableFilterPipe } from '../pipes/table-filter.pipe';
 import { PageNumberPipe } from '../pipes/page-number.pipe';
 import { PageListPipe } from '../pipes/page-list.pipe';
+import { TableSortPipe } from '../pipes/table-sort.pipe';
 
 @NgModule({
   imports:      [ CommonModule ],
-  declarations: [ TableFilterPipe, PageNumberPipe, PageListPipe ],
-  exports:      [ TableFilterPipe, PageNumberPipe, PageListPipe ],
+  declarations: [ TableSortPipe, TableFilterPipe, PageNumberPipe, PageListPipe ],
+  exports:      [ TableSortPipe, TableFilterPipe, PageNumberPipe, PageListPipe ],
   providers:    [ ApiService, RootscopeService, CookieService, DialogService, ProductStorageService, MenuListService ]
 })
 

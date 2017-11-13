@@ -23,19 +23,24 @@
           <td *ngFor="let column of columnList; let key = index">
             {{item[column.column]}}
           </td>
-          <td *ngIf="isAction" style="text-align:center;">
-            <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored" (click)="add_new_category(item)">
+          <td *ngIf="isAction.status" style="text-align:center;">
+            <button *ngIf="isAction.edit" class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored" (click)="edit(item)">
+              <i class="material-icons">mode_edit</i>
+            </button>
+            <button *ngIf="isAction.delete" class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored" (click)="delete(item)">
               <i class="material-icons">mode_edit</i>
             </button>
           </td>
         </tr>
       </tbody>
-      <tfoot>
+      <tfoot *ngIf="dataTableLists.length > 0">
         <tr>
-          <th>
-            <select class="w3-select" [(ngModel)]="pageNo">
-              <option *ngFor="let page of dataTableLists | tableFilter:filterText | pageList:10" [value]='page'>{{page}}</option>
-            </select>
+          <th [attr.colspan]="columnList.length + 1">
+            <div class="w3-col l2 m3 s12">
+                <select class="w3-select" [(ngModel)]="pageNo">
+                  <option *ngFor="let page of dataTableLists | tableFilter:filterText | pageList:10" [value]='page'>{{page}}</option>
+                </select>
+            </div>
           </th>
         </tr>
       </tfoot>

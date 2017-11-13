@@ -87,7 +87,12 @@ export class CategoryListComponent implements OnInit {
       {'name': 'Name', 'column': 'cate_name'},
       {'name': 'Description', 'column': 'cate_description'}
     ];
-    this.tableElementComponent.getTableDataLists({list: data.data, column: categoryColumn, action: true});
+    const action = {
+      status: true,
+      edit: true,
+      delete: false
+    };
+    this.tableElementComponent.getTableDataLists({list: data.data, column: categoryColumn, action: action});
     // this.$rootScope.setBlock(false);
   }
 

@@ -4,7 +4,9 @@ const glob = require('glob');
 
 module.exports = {
   entry: {  
-    app: glob.sync('./server/**/*.ts*')
+    // app: glob.sync('./server/**/*.ts*')
+    // app: './server/app.ts'
+    www: './server/bin/www.ts'
   },
   resolve: { extensions: ['.js', '.ts'] },
   target: 'node',

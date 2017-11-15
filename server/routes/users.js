@@ -3,6 +3,7 @@ var router = express.Router();
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
+  console.log("jes test server run normoly.");
   res.send('respond with a resource');
 });
 

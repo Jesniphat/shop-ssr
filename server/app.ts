@@ -26,7 +26,7 @@ const user = require('./routes/users');
 enableProdMode();
 
 // Express server
-const app = express();
+const app: express.Application = express();
 
 const PORT = process.env.PORT || 8000;
 const DIST_FOLDER = join(process.cwd(), 'dist');
@@ -80,8 +80,27 @@ app.get('*', (req, res) => {
   res.render(join(DIST_FOLDER, 'browser', 'index.html'), { req });
 });
 
+// Comment it out ** It from angular.io
 // Start up the Node server
-app.listen(PORT, () => {
-  console.log(`Node server listening on http://localhost:${PORT}`);
+// app.listen(PORT, () => {
+//   console.log(`Node server listening on http://localhost:${PORT}`);
+// });
+
+// This one add it with out ex from angular.io It same express gen. For debug some error. Then we add ./bin/www.ts
+// catch 404 and forward to error handler
+app.use((req: express.Request, res: express.Response, next) => {
+  const err = new Error('Not Found');
+  next(err);
 });
 
+// production error handler
+// no stacktrace leaked to user
+app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+  res.status(err.status || 500);
+  res.json({
+    error: {},
+    message: err.message,
+  });
+});
+
+export { app };

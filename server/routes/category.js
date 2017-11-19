@@ -1,9 +1,9 @@
-var express = require('express');
-var uuidv1 = require('uuid/v1');
-let promise = require('bluebird');
-let conn = require('../library/config');
+const express = require('express');
+const uuidv1 = require('uuid/v1');
+const promise = require('bluebird');
+const conn = require('../library/config');
 const permission = require('../library/permission');
-var router = express.Router();
+const router = express.Router();
 
 let db = require('../library/db');
 

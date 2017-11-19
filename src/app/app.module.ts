@@ -13,10 +13,12 @@ import { ManagerSideModule } from './components/manager-side/manager-side.module
 import { AppComponent } from './app.component';
 
 import './rxjs-operators';
+import { AlertsComponent } from './components/alerts/alerts.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AlertsComponent
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'shop'}),

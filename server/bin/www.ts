@@ -8,7 +8,7 @@ import { app } from '../app';
 /**
  * Get port from environment and store in Express.
  */
-const port = normalizePort(process.env.PORT || 8000);
+const port = normalizePort(process.env.PORT || 8800);
 app.set('port', port);
 
 /**

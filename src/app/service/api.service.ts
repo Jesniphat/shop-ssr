@@ -17,7 +17,7 @@ export class ApiService {
     private prod = false;
     public api = '';
     public upl = '';
-    public img = 'http://localhost:8000/';
+    public img = 'http://localhost:8800/';
 
   constructor(
     private http: HttpClient,

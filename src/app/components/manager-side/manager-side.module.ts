@@ -12,6 +12,7 @@ import { ManagerSideComponent } from './manager-side.component';
 import { ManagerDashboardComponent } from './manger-dashboard/manager-dashboard/manager-dashboard.component';
 import { CategoryListComponent } from './category/category-list/category-list.component';
 import { TableElementComponent } from './table-element/table-element.component';
+import { CategoryManagerComponent } from './category/category-manager/category-manager.component';
 
 @NgModule({
   imports: [
@@ -25,7 +26,8 @@ import { TableElementComponent } from './table-element/table-element.component';
     ManagerSideComponent,
     ManagerDashboardComponent,
     CategoryListComponent,
-    TableElementComponent
+    TableElementComponent,
+    CategoryManagerComponent
   ],
   providers: [
     Uploader

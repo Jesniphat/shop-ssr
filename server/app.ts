@@ -72,6 +72,9 @@ app.use('/api/upload', upload);
 app.use('/api/staff', staff);
 app.use('/api/user', user);
 
+// Server static files from /public
+app.use('/public', express.static(join(DIST_FOLDER, 'public')));
+
 // Server static files from /browser
 app.get('*', express.static(join(DIST_FOLDER, 'browser')));
 

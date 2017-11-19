@@ -46,6 +46,7 @@
     "nodemon": "^1.12.1",
     "rxjs": "^5.5.2",
     "ts-loader": "^3.1.1",
+    "uuid": "^3.1.0",
     "zone.js": "^0.8.14"
   },
   "devDependencies": {

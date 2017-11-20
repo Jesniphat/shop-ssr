@@ -41,10 +41,12 @@ router.post("/login", function(req, res, next) {
       };
       db.SelectRow(connection, gets, 
       (data) => {
+        if(data.id == undefined) {
+          reject("Can't login");
+        }
         let id = data.id;
         if(id != 0 || id != "0"){
           permission.writeToken(res, id);
-          console.log(permission.readToken(req));
           $scope = data;
           resolve(data);
         }else{
@@ -66,7 +68,8 @@ router.post("/login", function(req, res, next) {
         display_name:$scope.name, 
         last_name: $scope.lastname,
         login_name: $scope.user, 
-        password: $scope.password
+        password: $scope.password,
+        type: $scope.type
       }
     });
   }).catch((error) => {

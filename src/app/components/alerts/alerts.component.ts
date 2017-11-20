@@ -23,27 +23,23 @@ export class AlertsComponent implements OnInit {
   public setAlerts(data: any) {
     this.message = data.message;
     if (data.type === 'success') {
-      this.success = 'block';
+      document.getElementById('success').style.display  = 'block';
       setTimeout(function() {
-        this.success = 'none';
         document.getElementById('success').style.display = 'none';
       }, 3000);
     } else if (data.type === 'info') {
-      this.info = 'block';
+      document.getElementById('info').style.display  = 'block';
       setTimeout(function() {
-        this.info = 'none';
         document.getElementById('info').style.display = 'none';
       }, 3000);
     } else if (data.type === 'warning') {
-      this.warning = 'block';
+      document.getElementById('warning').style.display = 'block';
       setTimeout(function() {
-        this.warning = 'none';
         document.getElementById('warning').style.display = 'none';
       }, 3000);
     } else if (data.type === 'danger') {
-      this.danger = 'block';
+      document.getElementById('danger').style.display  = 'block';
       setTimeout(function() {
-        this.danger = 'none';
         document.getElementById('danger').style.display = 'none';
       }, 3000);
     }

@@ -5,6 +5,7 @@ import { MyUploadItem } from '../../../../upload-item';
 import { ApiService } from '../../../../service/api.service';
 import { RootscopeService } from '../../../../service/rootscope.service';
 import { AlertsService } from '../../../../service/alerts.service';
+import * as io from 'socket.io-client';
 
 @Component({
   selector: 'app-category-manager',
@@ -23,8 +24,14 @@ export class CategoryManagerComponent implements OnInit {
   @Output() childResult: EventEmitter<number> = new EventEmitter();
 
   /**
+   * Socket cliend
+   */
+  public socket = io('http://localhost:8880');
+
+  /**
   * Varable
   */
+  public locinData: any;
   public error: any = '';
   public cate = {
     cateId: '',
@@ -57,7 +64,7 @@ export class CategoryManagerComponent implements OnInit {
 
   public ngOnInit() {
     console.log('category_managet.component');
-
+    this.locinData = JSON.parse(localStorage.getItem('logindata'));
     this.imgLink = this.apiService.img;
 
     if (this.route.snapshot.paramMap.has('id')) {
@@ -131,6 +138,7 @@ export class CategoryManagerComponent implements OnInit {
     if (res.status === true) {
       // toastr.success('บันทึกข้อมูลสำเร็จ', 'Success!');
       this.alerts.success('บันทึกข้อมูลสำเร็จ');
+      this.socket.emit('save-message', {logindata: this.locinData, message: this.locinData.display_name + ' save category.'});
       // this.dialog.close();
       this.reset();
       this.childResult.emit(1);

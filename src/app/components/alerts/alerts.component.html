@@ -1,27 +1,27 @@
-<div class="w3-panel w3-red w3-display-container" [ngStyle]="{'display': 'none'}">
+<div id="danger" class="w3-panel w3-red w3-display-container" [ngStyle]="{'display': danger}">
   <span onclick="this.parentElement.style.display='none'"
   class="w3-button w3-red w3-large w3-display-topright">&times;</span>
   <h3>Danger!</h3>
-  <p>Red often indicates a dangerous or negative situation.</p>
+  <p style="width: 350px;">{{message}}</p>
 </div>
 
-<div class="w3-panel w3-yellow w3-display-container" [ngStyle]="{'display': 'none'}">
+<div id="warning" class="w3-panel w3-yellow w3-display-container" [ngStyle]="{'display': warning}">
   <span onclick="this.parentElement.style.display='none'"
   class="w3-button w3-yellow w3-large w3-display-topright">&times;</span>
   <h3>Warning!</h3>
-  <p>Yellow often indicates a warning that might need attention.</p>
+  <p style="width: 350px;">{{message}}</p>
 </div>
 
-<div class="w3-panel w3-green w3-display-container" [ngStyle]="{'display': 'none'}">
+<div id="success" class="w3-panel w3-green w3-display-container" [ngStyle]="{'display': success}">
   <span onclick="this.parentElement.style.display='none'"
   class="w3-button w3-green w3-large w3-display-topright">&times;</span>
   <h3>Success!</h3>
-  <p>Green often indicates something successful or positive.</p>
+  <p style="width: 350px;">{{message}}</p>
 </div>
 
-<div class="w3-panel w3-blue w3-display-container" [ngStyle]="{'display': 'none'}">
+<div id="info" class="w3-panel w3-blue w3-display-container" [ngStyle]="{'display': info}">
   <span onclick="this.parentElement.style.display='none'"
   class="w3-button w3-blue w3-large w3-display-topright">&times;</span>
   <h3>Info!</h3>
-  <p>Blue often indicates a neutral informative change or action.</p>
+  <p style="width: 350px;">{{message}}</p>
 </div>

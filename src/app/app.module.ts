@@ -11,9 +11,9 @@ import { ManagerLoginModule } from './components/manager-login/manager-login.mod
 import { ManagerSideModule } from './components/manager-side/manager-side.module';
 
 import { AppComponent } from './app.component';
+import { AlertsComponent } from './components/alerts/alerts.component';
 
 import './rxjs-operators';
-import { AlertsComponent } from './components/alerts/alerts.component';
 
 @NgModule({
   declarations: [

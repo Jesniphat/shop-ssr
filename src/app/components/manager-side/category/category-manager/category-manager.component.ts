@@ -4,6 +4,7 @@ import { Uploader } from 'angular2-http-file-upload';
 import { MyUploadItem } from '../../../../upload-item';
 import { ApiService } from '../../../../service/api.service';
 import { RootscopeService } from '../../../../service/rootscope.service';
+import { AlertsService } from '../../../../service/alerts.service';
 
 @Component({
   selector: 'app-category-manager',
@@ -50,7 +51,8 @@ export class CategoryManagerComponent implements OnInit {
     public uploaderService: Uploader,
     public apiService: ApiService,
     public $rootscope: RootscopeService,
-    public el: ElementRef
+    public el: ElementRef,
+    public alerts: AlertsService
   ) { }
 
   public ngOnInit() {
@@ -128,6 +130,7 @@ export class CategoryManagerComponent implements OnInit {
   public saveCategoryDoneAction(res: any) {
     if (res.status === true) {
       // toastr.success('บันทึกข้อมูลสำเร็จ', 'Success!');
+      this.alerts.success('บันทึกข้อมูลสำเร็จ');
       // this.dialog.close();
       this.reset();
       this.childResult.emit(1);
@@ -145,6 +148,7 @@ export class CategoryManagerComponent implements OnInit {
     console.log('error = ', this.error);
     // this.toastr.warning('บันทึกข้อมูลไม่สำเร็จ', 'Oops!');
     // toastr.warning('บันทึกข้อมูลไม่สำเร็จ', 'Warning!');
+    this.alerts.warning('บันทึกข้อมูลไม่สำเร็จ');
     setTimeout(() => this.error = null, 4000);
     // this.blockUI.stop();
     // this.$rootscope.setBlock(false);

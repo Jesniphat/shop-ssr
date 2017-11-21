@@ -8,6 +8,7 @@ import { DialogService } from '../service/dialog.service';
 import { ProductStorageService } from '../service/product-storage.service';
 import { MenuListService } from '../service/menu-list.service';
 import { AlertsService } from '../service/alerts.service';
+import { SocketReceiveService } from '../service/socket-receive.service';
 
 import { TableFilterPipe } from '../pipes/table-filter.pipe';
 import { PageNumberPipe } from '../pipes/page-number.pipe';
@@ -19,7 +20,16 @@ import { TableSortPipe } from '../pipes/table-sort.pipe';
   imports:      [ CommonModule ],
   declarations: [ TableSortPipe, TableFilterPipe, PageNumberPipe, PageListPipe ],
   exports:      [ TableSortPipe, TableFilterPipe, PageNumberPipe, PageListPipe ],
-  providers:    [ ApiService, RootscopeService, CookieService, DialogService, ProductStorageService, MenuListService, AlertsService ]
+  providers:    [
+    ApiService,
+    RootscopeService,
+    CookieService,
+    DialogService,
+    ProductStorageService,
+    MenuListService,
+    AlertsService,
+    SocketReceiveService
+  ]
 })
 
 export class SharedModule {}

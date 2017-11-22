@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { BrowserModule, Title, Meta } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -18,6 +19,7 @@ export class ManagerLoginComponent implements OnInit {
   storage: any;
 
   constructor(
+    @Inject(PLATFORM_ID) private platformId: object,
     public apiService: ApiService,
     public title: Title,
     public meta: Meta,
@@ -50,6 +52,9 @@ export class ManagerLoginComponent implements OnInit {
 
   getLoginDoneAction(res: any) {
     // console.log("res login = ", res);
+    if (isPlatformBrowser(this.platformId)) {
+      // localStorage.removeItem('logindata');
+    }
   }
 
   getLoginErrorAction(error: any) {

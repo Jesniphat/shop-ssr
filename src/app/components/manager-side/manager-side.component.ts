@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 
 import { ApiService } from '../../service/api.service';
 import { MenuListService } from '../../service/menu-list.service';
+import { SocketReceiveService } from '../../service/socket-receive.service';
+import { AlertsService } from '../../service/alerts.service';
 
 @Component({
   selector: 'app-manager-side',
@@ -17,10 +19,13 @@ export class ManagerSideComponent implements OnInit {
   constructor(
     private apiService: ApiService,
     private menuListService: MenuListService,
-    private router: Router
+    private router: Router,
+    public socketReceiveService: SocketReceiveService,
+    public alertsService: AlertsService
   ) {}
 
   public ngOnInit() {
+    console.log('ManagerSite');
     this.menuListService.$menuList.subscribe(data => this.menu(data));
     this.menuListService.getMenuList(true, 'system');
   }

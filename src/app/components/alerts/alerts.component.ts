@@ -26,22 +26,22 @@ export class AlertsComponent implements OnInit {
       document.getElementById('success').style.display  = 'block';
       setTimeout(function() {
         document.getElementById('success').style.display = 'none';
-      }, 3000);
+      }, 5000);
     } else if (data.type === 'info') {
       document.getElementById('info').style.display  = 'block';
       setTimeout(function() {
         document.getElementById('info').style.display = 'none';
-      }, 3000);
+      }, 5000);
     } else if (data.type === 'warning') {
       document.getElementById('warning').style.display = 'block';
       setTimeout(function() {
         document.getElementById('warning').style.display = 'none';
-      }, 3000);
+      }, 5000);
     } else if (data.type === 'danger') {
       document.getElementById('danger').style.display  = 'block';
       setTimeout(function() {
         document.getElementById('danger').style.display = 'none';
-      }, 3000);
+      }, 5000);
     }
   }
 

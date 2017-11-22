@@ -19,7 +19,7 @@ export class ManagerLoginComponent implements OnInit {
   storage: any;
 
   constructor(
-    @Inject(PLATFORM_ID) private platformId: object,
+    @Inject(PLATFORM_ID) private platformId: object, // Get platform is cliend and server
     public apiService: ApiService,
     public title: Title,
     public meta: Meta,
@@ -37,6 +37,12 @@ export class ManagerLoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    // Use only cliend site.
+    // if (isPlatformBrowser(this.platformId)) {
+    //   // Do something if want to use only cliend site.
+    // }
+
+    // Get login and clear cookie user.
     this.getLogin();
   }
 
@@ -52,9 +58,6 @@ export class ManagerLoginComponent implements OnInit {
 
   getLoginDoneAction(res: any) {
     // console.log("res login = ", res);
-    if (isPlatformBrowser(this.platformId)) {
-      // localStorage.removeItem('logindata');
-    }
   }
 
   getLoginErrorAction(error: any) {

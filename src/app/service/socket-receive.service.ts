@@ -92,7 +92,8 @@ export class SocketReceiveService {
    * @returns void
    */
   public sentSocketData(data: any) {
-    // do some thing
+    // This thing need observer to receive.
+    // this._socketGetData.next('something');
   }
 
 }

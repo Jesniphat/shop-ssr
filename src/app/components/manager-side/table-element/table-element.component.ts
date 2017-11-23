@@ -66,6 +66,8 @@ export class TableElementComponent implements OnInit {
    * @param string key
    */
   public sortTable(data: any, key: string) {
+    this.dataTableLists = this.dataTableLists.slice(0, this.dataTableLists.length);
+
     const currentClass = data.target.classList;
     const listHeadClass = document.getElementsByClassName('head');
     for (let i = 0; i < listHeadClass.length; i++) {
@@ -91,7 +93,6 @@ export class TableElementComponent implements OnInit {
       // this.categoryLists.sort(this.dynamicSort(key));
       this.sortTableData = key;
     }
-    this.dataTableLists = this.dataTableLists.slice(0, this.dataTableLists.length);
   }
 
 }

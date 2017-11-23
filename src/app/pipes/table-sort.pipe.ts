@@ -18,15 +18,15 @@ export class TableSortPipe implements PipeTransform {
     };
   }
 
-  transform(data: any[], args?: any): any {
+  transform(data: any[], args: any): any {
     if (!data || data === undefined || data.length === 0) {
-      return null;
+      return [];
     }
     // console.log(args);
-    if (args === '') {
+    if (!args) {
       return data;
     }
-    // data.sort(this.dynamicSort(args));
+    // result = data.sort(this.dynamicSort(args));
     return data.sort(this.dynamicSort(args));
   }
 

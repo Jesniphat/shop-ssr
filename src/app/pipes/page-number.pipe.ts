@@ -6,7 +6,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class PageNumberPipe implements PipeTransform {
 
   transform(data: any[], start: any): any {
-    // console.log(start);
+    if (!data || data === undefined || data.length === 0) {
+      return [];
+    }
     const result = {'data': [], 'page': []};
     const pageNumber = data.length / start.row ;
     const startNo = (start.pageNo * start.row) - start.row;
@@ -21,6 +23,7 @@ export class PageNumberPipe implements PipeTransform {
         }
         result.data.push(data[i]);
     }
+
     return result.data;
   }
 }

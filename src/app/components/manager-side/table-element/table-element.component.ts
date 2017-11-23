@@ -91,7 +91,7 @@ export class TableElementComponent implements OnInit {
       // this.categoryLists.sort(this.dynamicSort(key));
       this.sortTableData = key;
     }
-
+    this.dataTableLists = this.dataTableLists.slice(0, this.dataTableLists.length);
   }
 
 }

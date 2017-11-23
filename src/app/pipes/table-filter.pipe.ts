@@ -19,6 +19,10 @@ export class TableFilterPipe implements PipeTransform {
 
 
   transform(data: any[], str: any): any {
+    if (!data || data === undefined || data.length === 0) {
+      return [];
+    }
+
     if (!str) {
       return data;
     }

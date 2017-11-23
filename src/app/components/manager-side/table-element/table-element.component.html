@@ -19,7 +19,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of dataTableLists | tableFilter:filterText | pageNumber:{pageNo:pageNo, row:10} | tableSort:sortTableData">
+        <tr *ngFor="let item of dataTableLists | tableFilter:filterText | tableSort:sortTableData | pageNumber:{pageNo:pageNo, row:10}">
           <td *ngFor="let column of columnList; let key = index">
             {{item[column.column]}}
           </td>

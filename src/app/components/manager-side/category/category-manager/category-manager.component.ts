@@ -4,8 +4,8 @@ import { Uploader } from 'angular2-http-file-upload';
 import { MyUploadItem } from '../../../../upload-item';
 import { ApiService } from '../../../../service/api.service';
 import { RootscopeService } from '../../../../service/rootscope.service';
+import { SocketService } from '../../../../service/socket.service';
 import { AlertsService } from '../../../../service/alerts.service';
-import * as io from 'socket.io-client';
 
 @Component({
   selector: 'app-category-manager',
@@ -22,11 +22,6 @@ export class CategoryManagerComponent implements OnInit {
    * Sent date back to parent page e.g. category_list
    */
   @Output() childResult: EventEmitter<number> = new EventEmitter();
-
-  /**
-   * Socket cliend
-   */
-  public socket = io('http://localhost:8880');
 
   /**
   * Varable
@@ -58,6 +53,7 @@ export class CategoryManagerComponent implements OnInit {
     public uploaderService: Uploader,
     public apiService: ApiService,
     public $rootscope: RootscopeService,
+    public socketService: SocketService,
     public el: ElementRef,
     public alerts: AlertsService
   ) { }
@@ -125,7 +121,7 @@ export class CategoryManagerComponent implements OnInit {
 
   public saveCategory() {
     // this.blockUI.start('Saving...');
-    // this.$rootscope.setBlock(true);
+    this.$rootscope.setBlock(true);
     this.apiService
       .post('/api/category/savecategory', this.cate)
       .subscribe(
@@ -136,9 +132,8 @@ export class CategoryManagerComponent implements OnInit {
 
   public saveCategoryDoneAction(res: any) {
     if (res.status === true) {
-      // toastr.success('บันทึกข้อมูลสำเร็จ', 'Success!');
       this.alerts.success('บันทึกข้อมูลสำเร็จ');
-      this.socket.emit('save-message', {logindata: this.locinData, message: this.locinData.display_name + ' save category.'});
+      this.socketService.emitMessage({logindata: this.locinData, message: this.locinData.display_name + ' save category.'});
       // this.dialog.close();
       this.reset();
       this.childResult.emit(1);
@@ -148,7 +143,7 @@ export class CategoryManagerComponent implements OnInit {
       this.childResult.emit(0);
     }
     // this.blockUI.stop();
-    // this.$rootscope.setBlock(false);
+    this.$rootscope.setBlock(false);
   }
 
   public saveCategoryErrorAction(error: any) {
@@ -159,7 +154,7 @@ export class CategoryManagerComponent implements OnInit {
     this.alerts.warning('บันทึกข้อมูลไม่สำเร็จ');
     setTimeout(() => this.error = null, 4000);
     // this.blockUI.stop();
-    // this.$rootscope.setBlock(false);
+    this.$rootscope.setBlock(false);
     this.childResult.emit(0);
   }
 

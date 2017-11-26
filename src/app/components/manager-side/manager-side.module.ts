@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 
+import { BlockUIModule } from 'ng-block-ui';
 import { Uploader } from 'angular2-http-file-upload';
 
 import { SharedModule } from '../../shared/shared.module';
@@ -19,6 +20,7 @@ import { CategoryManagerComponent } from './category/category-manager/category-m
     CommonModule,
     BrowserModule,
     FormsModule,
+    BlockUIModule,
     SharedModule,
     Routing
   ],

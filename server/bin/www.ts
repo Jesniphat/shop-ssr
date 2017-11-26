@@ -5,15 +5,19 @@
 import * as http from 'http';
 import { app } from '../app';
 
+
 /**
  * Get port from environment and store in Express.
  */
+
 const port = normalizePort(process.env.PORT || 8800);
 app.set('port', port);
+
 
 /**
  * Create HTTP server.
  */
+
 const server = http.createServer(app);
 
 /**
@@ -23,6 +27,28 @@ const server = http.createServer(app);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+
+
+/**
+ * Socket io
+ */
+
+const io = require('socket.io')(server, {
+  serveClient: false,
+  wsEngine: 'ws' // uws is not supported since it is a native module
+});
+
+io.on('connection', function (socket) {
+  // console.log('User connected');
+  socket.on('disconnect', function() {
+    // console.log('User disconnected');
+  });
+  socket.on('save-message', function (data) {
+    // console.log('socket = ', data);
+    io.emit(data.logindata.type, { loginData: data.logindata, message: data.message });
+  });
+});
+
 
 /**
  * Normalize a port into a number, string, or false.
@@ -44,6 +70,7 @@ function normalizePort(val): boolean | number {
 
   return false;
 }
+
 
 /**
  * Event listener for HTTP server 'error' event.
@@ -72,6 +99,7 @@ function onError(error) {
       throw error;
   }
 }
+
 
 /**
  * Event listener for HTTP server 'listening' event.

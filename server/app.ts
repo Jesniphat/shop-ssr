@@ -21,7 +21,6 @@ const product = require('./routes/product');
 const upload = require('./routes/upload');
 const staff = require('./routes/staff');
 const user = require('./routes/users');
-const socket = require('./routes/socket');
 
 // Faster server renders w/ Prod mode (dev mode never needed)
 enableProdMode();
@@ -71,7 +70,6 @@ app.use('/api/category', category);
 app.use('/api/product', product);
 app.use('/api/upload', upload);
 app.use('/api/staff', staff);
-app.use('/api/socket', socket);
 app.use('/api/user', user);
 
 // Server static files from /public

@@ -5,11 +5,11 @@ import { AlertsService } from './alerts.service';
 import * as io from 'socket.io-client';
 
 @Injectable()
-export class SocketReceiveService {
+export class SocketService {
   /**
    * Socket cliend
    */
-  public socket = io('http://localhost:8880');
+  public socket = io('http://localhost:8800');
   public loginData: any;
 
   /**
@@ -83,6 +83,15 @@ export class SocketReceiveService {
 
     // Sent data for Observer
     this.sentSocketData(message);
+  }
+
+
+  /**
+   * Emit socket messager to server
+   * @param data
+   */
+  public emitMessage(data: any) {
+    this.socket.emit('save-message', data);
   }
 
   /**

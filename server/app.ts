@@ -13,14 +13,14 @@ import * as cookieParser from 'cookie-parser';
 import * as bodyParser from 'body-parser';
 
 // Import Routes
-const menu = require('./routes/menu');
-const home = require('./routes/home');
-const authen = require('./routes/authen');
-const category = require('./routes/category');
-const product = require('./routes/product');
-const upload = require('./routes/upload');
-const staff = require('./routes/staff');
-const user = require('./routes/users');
+import { menuRouter } from './routes/menu';
+import { homeRouter } from './routes/home';
+import { authenRouter } from './routes/authen';
+import { categoryRouter } from './routes/category';
+import { productRouter } from './routes/product';
+import { uploadRouter } from './routes/upload';
+import { staffRouter } from './routes/staff';
+import { usersRouter } from './routes/users';
 
 // Faster server renders w/ Prod mode (dev mode never needed)
 enableProdMode();
@@ -63,14 +63,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use('/api/menu', menu);
-app.use('/api/authen', authen);
-app.use('/api/home', home);
-app.use('/api/category', category);
-app.use('/api/product', product);
-app.use('/api/upload', upload);
-app.use('/api/staff', staff);
-app.use('/api/user', user);
+app.use('/api/menu', menuRouter);
+app.use('/api/authen', authenRouter);
+app.use('/api/home', homeRouter);
+app.use('/api/category', categoryRouter);
+app.use('/api/product', productRouter);
+app.use('/api/upload', uploadRouter);
+app.use('/api/staff', staffRouter);
+app.use('/api/user', usersRouter);
 
 // Server static files from /public
 app.use('/public', express.static(join(DIST_FOLDER, 'public')));
@@ -91,7 +91,7 @@ app.get('*', (req, res) => {
 
 // This one add it with out ex from angular.io It same express gen. For debug some error. Then we add ./bin/www.ts
 // catch 404 and forward to error handler
-app.use((req: express.Request, res: express.Response, next) => {
+app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
   const err = new Error('Not Found');
   next(err);
 });

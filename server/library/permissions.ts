@@ -1,41 +1,45 @@
-const promise       = require('bluebird');
-const conn          = require('./config');
-const jwt           = require('jwt-simple');
+import * as promise from 'bluebird';
+// import { Config } from './config'; // * as conn
+import * as jwt from 'jwt-simple';
 
-var _permission = new function(){
-  this.secret     = "xxx";
-  this.cookieName = "user";
+export class Permission {
+  public secret     = 'xxx';
+  public cookieName = 'user';
+  // public token: any;
 
+  constructor() {
+    // console.log('start');
+  }
 ///////////// read tokem method  ///////////////////////////////////////////////
-  this.readToken = function(req){
-    var token = req.cookies[this.cookieName];
+  public readToken(req) {
+    let token = req.cookies[this.cookieName];
     // console.log("Before decode : ", token);
-    if(token == undefined){
-      token = {id:0};
+    if (token === undefined) {
+      token = {id: 0};
     }else {
-      token = jwt.decode(token, this.secret)
+      token = jwt.decode(token, this.secret, true, '');
     }
     // console.log("permission readToken = ", token);
     return token;
   }
 
 ///////////// write tokem method  //////////////////////////////////////////////
-  this.writeToken = function(res, id){
-    var token = {id:id};
-    token = jwt.encode(token, this.secret);
+  public writeToken(res, id) {
+    let token: any = {id: id};
+    token = jwt.encode(token, this.secret, '', '');
     res.cookie(this.cookieName, token);
   }
 
 ///////////// clear tokem method  //////////////////////////////////////////////
-  this.clearToken = function(res){
+  public clearToken(res) {
     this.writeToken(res, 0);
   }
 
 ///////////// islogin tokem method  ////////////////////////////////////////////
-  this.isLogin = function(req){
-    var token = this.readToken(req);
+  public isLogin(req) {
+    const token = this.readToken(req);
     // console.log("token is : ", token);
-    if(token.id != 0){
+    if (token.id !== 0) {
       return true;
     }else {
       return false;
@@ -43,10 +47,8 @@ var _permission = new function(){
   }
 
 ///////////// getid tokem method  //////////////////////////////////////////////
-  this.getID = function(req) {
-    var token = this.readToken(req);
+  public getID(req) {
+    const token = this.readToken(req);
     return token.id;
   }
 }
-
-module.exports = _permission;

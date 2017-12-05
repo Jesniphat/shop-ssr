@@ -21,7 +21,7 @@ export class CategoryManagerComponent implements OnInit {
   /**
    * Sent date back to parent page e.g. category_list
    */
-  @Output() childResult: EventEmitter<number> = new EventEmitter();
+  @Output() createCateResult: EventEmitter<number> = new EventEmitter();
 
   /**
   * Varable
@@ -136,11 +136,11 @@ export class CategoryManagerComponent implements OnInit {
       this.socketService.emitMessage({logindata: this.locinData, message: this.locinData.display_name + ' save category.'});
       // this.dialog.close();
       this.reset();
-      this.childResult.emit(1);
+      this.createCateResult.emit(1);
     } else {
       console.log('can not save');
       // toastr.warning('บันทึกข้อมูลไม่สำเร็จ', 'Warning!');
-      this.childResult.emit(0);
+      this.createCateResult.emit(0);
     }
     // this.blockUI.stop();
     this.$rootscope.setBlock(false);
@@ -155,7 +155,11 @@ export class CategoryManagerComponent implements OnInit {
     setTimeout(() => this.error = null, 4000);
     // this.blockUI.stop();
     this.$rootscope.setBlock(false);
-    this.childResult.emit(0);
+    this.createCateResult.emit(0);
+  }
+
+  public close() {
+    this.createCateResult.emit(1);
   }
 
   public reset() {

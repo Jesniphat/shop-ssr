@@ -10,18 +10,23 @@
   </div>
 </div>
 <br/> -->
-<div class="w3-card-4">
-  <img [src]="cate.coverPic" alt="Norway">
-  <div class="w3-container w3-center">
-    <p>The Troll's tongue in Hardanger, Norway</p>
-  </div>
-</div>
-<br>
+<h4 class="ui dividing header">Category control</h4>
+<hr>
+
 <form class="w3-container" #categoryForm="ngForm">
-  <h4 class="ui dividing header">Category control</h4>
-  <hr>
   <div class="w3-row">
-    <div class="w3-col l3 m6 s12">
+    <div class="w3-col l5 m6 s12">
+      <div class="w3-card-4">
+        <img [src]="cate.coverPic" alt="Norway">
+        <div class="w3-container w3-center">
+          <p>The Troll's tongue in Hardanger, Norway</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="w3-row">
+    <div class="w3-col l5 m6 s12">
       <label>Name</label>
       <label [hidden]="cateName.valid || cateName.pristine" style="color: red;">
         * Category name is required
@@ -31,7 +36,7 @@
   </div>
   <br>
   <div class="w3-row">
-    <div class="w3-col l3 m6 s12">
+    <div class="w3-col l5 m6 s12">
       <label>Status</label>
       <select class="w3-select w3-border" id="categoryStatus" name="categoryStatus" [(ngModel)]="cate.selectedStatus">
         <option *ngFor="let item of statusLists" [value]='item.value'>
@@ -42,7 +47,7 @@
   </div>
   <br>
   <div class="w3-row">
-    <div class="w3-col l3 m6 s12">
+    <div class="w3-col l5 m6 s12">
       <label>Category image</label>
       <div>
         <input class="w3-input w3-border" type="file" id="categoryImage" placeholder="Product image" 
@@ -52,7 +57,7 @@
   </div>
   <br>
   <div class="w3-row">
-    <div class="w3-col l3 m6 s12">
+    <div class="w3-col l5 m6 s12">
       <label>Description</label>
       <div>
         <textarea class="w3-input w3-border" type="text" id="categoryDesciption" placeholder="First Name" [(ngModel)]="cate.cateDescription" 
@@ -62,11 +67,11 @@
   </div>
   <br>
   <div class="w3-row">
-    <div class="w3-col l3 m6 s12">
+    <div class="w3-col l5 m6 s12">
       <button class="w3-button w3-blue" 
       type="submit" [disabled]="categoryForm.form.invalid" (click)="saveCategory()">Submit</button>
-      <!-- <button class="w3-button w3-red" (click)="dialog.close()"
-      type="submit">Close</button> -->
+      <button class="w3-button w3-red" (click)="close()"
+      type="submit">Close</button>
     </div>
   </div>
 </form>

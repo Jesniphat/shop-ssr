@@ -4,6 +4,7 @@ import { ApiService } from '../../../../service/api.service';
 import { RootscopeService } from '../../../../service/rootscope.service';
 
 import { TableElementComponent } from '../../table-element/table-element.component';
+import { CategoryManagerComponent } from '../category-manager/category-manager.component';
 
 @Component({
   selector: 'app-category-list',
@@ -26,6 +27,7 @@ export class CategoryListComponent implements OnInit {
 	 * Set view child from product manage
 	 */
   @ViewChild(TableElementComponent) private tableElementComponent: TableElementComponent;
+  @ViewChild(CategoryManagerComponent) private categoryManagerComponent: CategoryManagerComponent;
 
   /**
 	 * Class constructor
@@ -119,6 +121,7 @@ export class CategoryListComponent implements OnInit {
 	 */
   public add_new_category(data: any) {
     console.log('add new cate = ', data);
+    document.getElementById('addcatemodel').style.display = 'block';
     // let link: any;
     // if(data == 'create'){
     // 		link = ['/category_list/create_cate', data];
@@ -128,13 +131,13 @@ export class CategoryListComponent implements OnInit {
     // this.router.navigate(link);
 
     // this.dialog.showModal();
-    // if(data == 'create'){
-    //   this.categoryId = data;
-    //   this.categoryManageComponent.reset();
-    // }else{
-    //   this.categoryId = data;
-    //   this.categoryManageComponent.getCategoryByid(data);
-    // }
+    if (data === 'create') {
+      this.categoryId = data;
+      this.categoryManagerComponent.reset();
+    }else {
+      this.categoryId = data;
+      this.categoryManagerComponent.getCategoryByid(data);
+    }
   }
 
   /**
@@ -143,6 +146,13 @@ export class CategoryListComponent implements OnInit {
    */
   public tableReturn(event: any) {
     console.log(event);
+  }
+
+  public createCateResult(result: any) {
+    if (result) {
+      document.getElementById('addcatemodel').style.display = 'none';
+      this.getCategoryList();
+    }
   }
 
 }

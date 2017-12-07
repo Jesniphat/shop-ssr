@@ -17,6 +17,7 @@ export class CategoryManagerComponent implements OnInit {
    * Data from parent page e.g. category_list
    */
   @Input() categoryId: any;
+  @Input() modelOpen: any = false;
 
   /**
    * Sent date back to parent page e.g. category_list

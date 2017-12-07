@@ -15,11 +15,13 @@
 
 <div id="addcatemodel" class="w3-modal">
   <div id="cate-model-content" class="w3-modal-content w3-card-4 w3-animate-zoom">
-    <app-category-manager [categoryId]="categoryId" (createCateResult)="createCateResult($event)"></app-category-manager>
+    <app-category-manager [categoryId]="categoryId" [modelOpen] = 'true' (createCateResult)="createCateResult($event)"></app-category-manager>
     
     <!-- <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
-      <button onclick="document.getElementById('addcatemodel').style.display='none'" type="button" class="w3-button w3-red">Cancel</button>
-      <span class="w3-right w3-padding w3-hide-small">Forgot <a href="#">password?</a></span>
+      <button class="w3-button w3-blue" 
+      type="submit" (click)="categoryManagerComponent.saveCategory()">Submit</button>
+      <button onclick="document.getElementById('addcatemodel').style.display='none'" 
+      type="button" class="w3-button w3-red w3-right">Cancel</button>
     </div> -->
 
   </div>

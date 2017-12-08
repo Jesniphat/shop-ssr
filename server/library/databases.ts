@@ -40,7 +40,7 @@ class Database {
     let order = '';
     let limit = '';
 
-    if (typeof(data.where) === 'object'){
+    if (typeof(data.where) === 'object') {
       for (let keys in data.where) {
         where += ' AND ' + keys + ' = \'' + data.where[keys] + '\'';
       }
@@ -136,7 +136,7 @@ class Database {
     let $scrope;
     const fields = [];
     const set = [];
-    let where = ' WHERE 1 = 1 '; 
+    let where = ' WHERE 1 = 1 ';
     for (let keys in data.query) {
       fields.push(keys + ' = ?');
       set.push(data.query[keys]);

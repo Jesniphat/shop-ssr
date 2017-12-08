@@ -25,7 +25,8 @@ categoryRouter.use((req: express.Request, res: express.Response, next: express.N
   }
 });
 
-categoryRouter.post('/category_list', (req: express.Request, res: express.Response, next: express.NextFunction) => {
+categoryRouter.get('/:id', (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  const category_id: any = req.params.id;
   const connection: any = conn.init();
   const category: any = req.body;
   let $scope: any;
@@ -33,12 +34,17 @@ categoryRouter.post('/category_list', (req: express.Request, res: express.Respon
   // let where = [];
   const category_list: any = function(){
     return new promise((resolve, reject) => {
+      let where: any = {status: 'Y'};
+      if (category_id !== 'all') {
+        where = {
+          status: 'Y',
+          id: category_id
+        };
+      }
       const gets: any = {
-        fields: 'id, cate_name, cate_description, \'\' as product_qty',
+        fields: '*, \'\' as product_qty ',
         table: 'category',
-        where: {
-          status: 'Y'
-        }
+        where: where
       };
       db.SelectAll(connection, gets, (data) => {
           $scope = data;

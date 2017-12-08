@@ -72,6 +72,9 @@ app.use('/api/upload', uploadRouter);
 app.use('/api/staff', staffRouter);
 app.use('/api/user', usersRouter);
 
+// Disable 304
+app.disable('etag');
+
 // Server static files from /public
 app.use('/public', express.static(join(DIST_FOLDER, 'public')));
 

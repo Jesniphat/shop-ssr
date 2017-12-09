@@ -9,7 +9,7 @@
   
   <div class="w3-row">
     <!-- table here -->
-    <app-table-element [dataTables]="categoryLists" (tableElementResult)="tableReturn($event)"></app-table-element>    
+    <app-table-element [dataTables]="categoryLists" (editData)="getDataEdit($event)" (tableElementResult)="tableReturn($event)"></app-table-element>    
   </div>
 </div>
 

@@ -18,6 +18,8 @@ export class TableElementComponent implements OnInit {
    * Sent date back to parent page e.g. category_list
    */
   @Output() tableElementResult: EventEmitter<number> = new EventEmitter();
+  @Output() editData: EventEmitter<number> = new EventEmitter();
+  @Output() deleteData: EventEmitter<number> = new EventEmitter();
 
   /**
    * Varable
@@ -48,7 +50,6 @@ export class TableElementComponent implements OnInit {
     this.dataTableLists = tableData.list;
     this.columnList = tableData.column;
     this.isAction = tableData.action;
-    console.log(tableData);
   }
 
   /**
@@ -93,6 +94,24 @@ export class TableElementComponent implements OnInit {
       // this.categoryLists.sort(this.dynamicSort(key));
       this.sortTableData = key;
     }
+  }
+
+  /**
+   * Sent data edit to parant
+   * @param data
+   * @access public
+   */
+  public edit(data: any) {
+    this.editData.emit(data);
+  }
+
+  /**
+   * Sent data delete to parant
+   * @param data
+   * @access public
+   */
+  public delete(data: any) {
+    this.deleteData.emit(data);
   }
 
 }

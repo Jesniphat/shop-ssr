@@ -120,8 +120,7 @@ export class CategoryListComponent implements OnInit {
 	 * @param data
 	 * @return void
 	 */
-  public add_new_category(data: any) {
-    console.log('add new cate = ', data);
+  public add_new_category(id: any) {
     document.getElementById('addcatemodel').style.display = 'block';
     // let link: any;
     // if(data == 'create'){
@@ -132,12 +131,12 @@ export class CategoryListComponent implements OnInit {
     // this.router.navigate(link);
 
     // this.dialog.showModal();
-    if (data === 'create') {
-      this.categoryId = data;
+    if (id === 'create') {
+      this.categoryId = id;
       this.categoryManagerComponent.reset();
     }else {
-      this.categoryId = data;
-      this.categoryManagerComponent.getCategoryByid(data);
+      this.categoryId = id;
+      this.categoryManagerComponent.getCategoryByid(id);
     }
   }
 
@@ -149,11 +148,27 @@ export class CategoryListComponent implements OnInit {
     console.log(event);
   }
 
+  /**
+   * Create category result for child
+   * @param result
+   * @access public
+   * @returns void
+   */
   public createCateResult(result: any) {
     if (result) {
       document.getElementById('addcatemodel').style.display = 'none';
       this.getCategoryList();
     }
+  }
+
+  /**
+   * Get data for edit function from child
+   * @param data
+   * @access public
+   * @returns void
+   */
+  public getDataEdit(data: any) {
+    this.add_new_category(data.id);
   }
 
 }

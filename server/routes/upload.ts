@@ -109,11 +109,13 @@ uploadRouter.post('/product', uploadFile.single('file'), function (req, res, nex
       status: true,
       data: $scope
     });
+    connection.end();
   }).catch(function(e) {
     res.json({
       status: false,
       error: e
     });
+    connection.end();
   });
 });
 
@@ -160,11 +162,13 @@ uploadRouter.post('/category', uploadFile.single('file'), function (req, res, ne
         pic_path: 'public/images/category-img/'  + $scope.newName
       }
     });
+    connection.end();
   }).catch(function(e) {
     res.json({
       status: false,
       error: e
     });
+    connection.end();
   });
 });
 

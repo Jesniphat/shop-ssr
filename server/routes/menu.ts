@@ -61,12 +61,14 @@ menuRouter.post('/menulist', (req, res, next) => {
       status: true,
       data: data
     });
+    connection.end();
   })
   .catch(function(error){
     res.json({
       status: false,
       error: error
     });
+    connection.end();
   });
 });
 

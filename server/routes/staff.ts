@@ -61,12 +61,14 @@ staffRouter.post('/createstaff', (req, res, next) => {
           data: data
         });
       }, error => reject(error));
+      con.end();
     });
   }).catch((error) => {
     res.json({
       status: false,
       error: error
     });
+    con.end();
   });
 });
 
@@ -107,12 +109,14 @@ staffRouter.post('/updatestaff', (req, res, next) => {
           data: result
         });
       }, error => reject(error));
+      con.end();
     });
   }).catch((error) => {
     res.json({
       status: false,
       data: error
     });
+    con.end();
   });
 
 });

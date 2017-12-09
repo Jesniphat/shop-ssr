@@ -62,12 +62,14 @@ categoryRouter.get('/:id', (req: express.Request, res: express.Response, next: e
       status: true,
       data: data
     });
+    connection.end();
   })
   .catch(function(error){
     res.json({
       status: false,
       error: error
     });
+    connection.end();
   });
 });
 
@@ -103,11 +105,13 @@ categoryRouter.post('/getcategorybyid', (req: express.Request, res: express.Resp
       status: true,
       data: data
     });
+    connection.end();
   }).catch(function(e){
     res.json({
       status: false,
       error: e
     });
+    connection.end();
   });
 });
 
@@ -192,6 +196,7 @@ categoryRouter.post('/savecategory', (req: express.Request, res: express.Respons
       }, (error) => {
         reject(error);
       });
+      connection.end();
     });
   }).catch(function(e){
     console.log('Roll back error is', e);
@@ -200,6 +205,7 @@ categoryRouter.post('/savecategory', (req: express.Request, res: express.Respons
         status: false,
         error: e
       });
+      connection.end();
     });
   });
 });

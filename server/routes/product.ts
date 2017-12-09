@@ -7,7 +7,7 @@ import { Config } from '../library/configs';
 import { Gencode } from '../library/gencodes';
 import { Database } from '../library/databases';
 
-const productRouter:express.Router = express.Router();
+const productRouter: express.Router = express.Router();
 
 const permission = new Permission();
 const conn = new Config();
@@ -75,12 +75,14 @@ productRouter.post('/product_list', (req, res, next) => {
       status: true,
       data: $data
     });
+    connection.end();
   })
   .catch(($error) => {
     res.json({
       status: false,
       error: $error
     });
+    connection.end();
   });
 });
 
@@ -148,11 +150,13 @@ productRouter.post('/getproductbyid', (req, res, next) => {
         status: true,
         data: product_data
       });
+      connection.end();
     }).catch(function($e){
       res.json({
         status: false,
         error: $e
       });
+      connection.end();
     });
   }
 );
@@ -362,6 +366,7 @@ productRouter.post('/saveproduct', (req, res, next) => {
         });
         resolve(success);
       }, errors => reject(errors));
+      connection.end();
     });
   }).catch((errors) => {
     console.log('Roll back error is', errors);
@@ -371,6 +376,7 @@ productRouter.post('/saveproduct', (req, res, next) => {
         error: errors
       });
     });
+    connection.end();
   });
 });
 
@@ -431,6 +437,7 @@ productRouter.post('/delete_product', (req, res, next) => {
         });
         resolve(success);
       }, errors => reject(errors));
+      connection.end();
     });
   }).catch((errors) => {
     console.log('Roll back error is', errors);
@@ -440,6 +447,7 @@ productRouter.post('/delete_product', (req, res, next) => {
         error: errors
       });
     });
+    connection.end();
   });
 });
 
@@ -498,12 +506,14 @@ productRouter.post('/getAllProductStore', (req, res, next) => {
       status: true,
       data: data
     });
+    connection.end();
   }).catch((errors) => {
     console.log('Roll back error is', errors);
     res.json({
       status: false,
       error: errors
     });
+    connection.end();
   });
 
 });
@@ -548,6 +558,7 @@ productRouter.post('/maxProductUpdate', (req, res, next) => {
       status: true,
       data: data[0].max
     });
+    connection.end();
   })
   .catch((error) => {
     console.log('error => ', error);
@@ -555,6 +566,7 @@ productRouter.post('/maxProductUpdate', (req, res, next) => {
       status: false,
       error: error
     });
+    connection.end();
   });
 });
 
@@ -606,6 +618,7 @@ productRouter.post('/saveStockIn', (req, res, next) => {
         });
         resolve(success);
       }, errors => reject(errors));
+      connection.end();
     });
   }).catch((errors) => {
     console.log('Roll back error is', errors);
@@ -615,6 +628,7 @@ productRouter.post('/saveStockIn', (req, res, next) => {
         error: errors
       });
     });
+    connection.end();
   });
 });
 
@@ -653,6 +667,7 @@ productRouter.post('/getStockList', (req, res, next) => {
       status: true,
       data: data
     });
+    connection.end();
   })
   .catch((error) => {
     console.log('error => ', error);
@@ -660,6 +675,7 @@ productRouter.post('/getStockList', (req, res, next) => {
       status: false,
       error: error
     });
+    connection.end();
   });
 
 });

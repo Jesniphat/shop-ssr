@@ -9,9 +9,9 @@ const db: any = new Database();
 
 homeRouter.use((req, res, next) => {
   // console.log("perrmission : ", permission.readToken(req));
-  if(permission.isLogin(req)) {
+  if (permission.isLogin(req)) {
     next();
-  }else {
+  } else {
     res.json({
       status: true,
       nologin: true,

@@ -4,6 +4,7 @@ import * as md5 from 'md5';
 import { Config } from '../library/configs';
 import { Permission } from '../library/permissions';
 import { Database } from '../library/databases';
+import { connect } from 'net';
 
 const authenRouter: express.Router = express.Router();
 
@@ -76,11 +77,13 @@ authenRouter.post('/login', function(req, res, next) {
         type: $scope.type
       }
     });
+    connection.end();
   }).catch((error) => {
     res.json({
       status: false,
       error: error
     });
+    connection.end();
   });
 
 });

@@ -1,27 +1,32 @@
 <block-ui>
   <!-- Sidebar -->
-  <div class="w3-sidebar w3-bar-block w3-collapse w3-card w3-animate-left" style="width:200px;z-index:4" id="mySidebar">
+  <nav class="w3-sidebar w3-bar-block w3-collapse w3-animate-left w3-card" style="z-index:3;width:250px;" id="mySidebar">
+    <a class="w3-bar-item w3-button w3-border-bottom w3-large" href="#"><img src="https://www.w3schools.com/images/w3schools.png" style="width:80%;"></a>
     <button class="w3-bar-item w3-button w3-large w3-hide-large" (click)="w3_close()">Close &times;</button>
-    <a class="w3-bar-item w3-button" *ngFor="let menu of menuLists" 
+    <a class="w3-bar-item w3-button" *ngFor="let menu of menuLists" routerLinkActive="active" 
     [routerLink]="[menu.module, { outlets: { 'm': menu.outlets } }]">
       {{menu.name}}
     </a>
-  </div>
+  </nav>
 
   <!-- Overlay -->
-  <div class="w3-overlay" id="myOverlay" (click)="w3_close()" style="cursor:pointer"></div>
+  <div class="w3-overlay w3-hide-large w3-animate-opacity" id="myOverlay" (click)="w3_close()" style="cursor:pointer"></div>
 
-  <div class="w3-main" style="margin-left:200px">
-    <div class="w3-teal w3-black">
-        <div class="w3-bar w3-black">
-          <div class="w3-bar-item w3-hide-large">
-            <button class="w3-button w3-teal w3-hide-large w3-black" id="three-cross" (click)="w3_open()">&#9776;</button>
-          </div>
-          <div class="w3-bar-item">London</div>
-          <div class="w3-bar-item">Paris</div>
-          <div class="w3-bar-item">Tokyo</div>
-        </div>
+  <div class="w3-main" style="margin-left:250px">
+    <!-- Top -->
+    <div id="myTop" class="w3-container w3-top w3-theme w3-large">
+      <p>
+        <!-- <i class="fa fa-bars w3-button w3-hide-large w3-xlarge" (click)="w3_open()"></i> -->
+        <i class="material-icons w3-button w3-hide-large" (click)="w3_open()">menu</i>
+        <span id="myIntro" class="w3-hide">Manager: {{headerText}}</span>
+      </p>
     </div>
+
+    <!-- Header -->
+    <header class="w3-container w3-theme" style="padding:5px 10px">
+      <h4 style="padding-bottom: 3px;"><b>Manager: {{headerText}}</b></h4>
+    </header>
+
     <!-- Page content -->
     <div class="w3-container">
       <router-outlet name="m"></router-outlet>

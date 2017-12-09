@@ -20,7 +20,9 @@
       "prefix": "app",
       "styles": [
         "styles.scss",
-        "w3.scss"
+        "w3.scss",
+        "theme.scss",
+        "material-icon.scss"
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.min.js"

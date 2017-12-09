@@ -65,6 +65,7 @@ export class CategoryManagerComponent implements OnInit {
     this.imgLink = this.apiService.img;
 
     if (this.route.snapshot.paramMap.has('id')) {
+      this.$rootscope.changeHeaderText('category manager');
       this.cate.cateId = this.route.snapshot.paramMap.get('id');
     } else {
       this.cate.cateId = this.categoryId;

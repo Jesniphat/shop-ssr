@@ -20,6 +20,7 @@ declare const $: any;
 export class ManagerSideComponent implements OnInit {
   @BlockUI() blockUI: NgBlockUI; // Load block UI
   public menuLists = [];
+  public headerText: any = '';
 
   constructor(
     private apiService: ApiService,
@@ -28,12 +29,20 @@ export class ManagerSideComponent implements OnInit {
     public socketService: SocketService,
     public alertsService: AlertsService,
     public $rootScope: RootscopeService,
-  ) {}
+  ) {
+    const that = this;
+    // Change style of top container on scroll
+    window.onscroll = function () {
+      that.scrollFunction();
+    };
+  }
 
   public ngOnInit() {
     console.log('ManagerSite');
     this.$rootScope.doBlock$.subscribe(data => this.block(data));
+    this.$rootScope.headerText$.subscribe(text => this.headerText = text || '');
     this.menuListService.$menuList.subscribe(data => this.menu(data));
+
     this.menuListService.getMenuList(true, 'system');
   }
 
@@ -53,6 +62,16 @@ export class ManagerSideComponent implements OnInit {
   public w3_close() {
     document.getElementById('mySidebar').style.display = 'none';
     document.getElementById('myOverlay').style.display = 'none';
+  }
+
+  public scrollFunction() {
+    if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+      document.getElementById('myTop').classList.add('w3-card-4', 'w3-animate-opacity');
+      document.getElementById('myIntro').classList.add('w3-show-inline-block');
+    } else {
+      document.getElementById('myIntro').classList.remove('w3-show-inline-block');
+      document.getElementById('myTop').classList.remove('w3-card-4', 'w3-animate-opacity');
+    }
   }
 
   public menu(data) {

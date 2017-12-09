@@ -8,13 +8,16 @@ export class RootscopeService {
   // public data:any;
   public doBlock$: Observable<any>;
   public showNav$: Observable<any>;
+  public headerText$: Observable<any>;
 
   private _blockUI: any;
   private _showNav: any;
+  private _headerText: any;
 
   constructor() {
     this.doBlock$ = new Observable(observer => this._blockUI = observer);
     this.showNav$ = new Observable(observer => this._showNav = observer);
+    this.headerText$ = new Observable(observer => this._headerText = observer);
   }
 
   // service command
@@ -26,5 +29,9 @@ export class RootscopeService {
     this._blockUI.next({
       block: data
     });
+  }
+
+  public changeHeaderText(text: string) {
+    this._headerText.next(text);
   }
 }

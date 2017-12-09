@@ -54,6 +54,7 @@ export class CategoryListComponent implements OnInit {
 	 * @return void
 	 */
   public ngOnInit() {
+    this.$rootScope.changeHeaderText('category list');
     console.log('category_list.component');
     // this.dialog = this.dialogService.build(document.getElementById('add-cate'));
     this.getCategoryList();

@@ -78,11 +78,8 @@ export class CategoryManagerComponent implements OnInit {
 
   public getCategoryByid(id: any) {
     // this.blockUI.start('Loading...');
-    const param = {
-      cate_id: id
-    };
     this.apiService
-      .post('/api/category/getcategorybyid', param)
+      .get('/api/category/' + id)
       .subscribe(
       res => this.getCategoryByidDoneAction(res),
       error => this.getCategoryByidErrorAction(error)
@@ -92,7 +89,7 @@ export class CategoryManagerComponent implements OnInit {
   public getCategoryByidDoneAction(res: any) {
     if (res.status === true) {
       // console.log(res);
-      const cateResData = res.data;
+      const cateResData = res.data[0];
       this.cate.cateId = cateResData.id;
       this.cate.cateName = cateResData.cate_name;
       this.cate.cateDescription = cateResData.cate_description;
@@ -124,12 +121,22 @@ export class CategoryManagerComponent implements OnInit {
   public saveCategory() {
     // this.blockUI.start('Saving...');
     this.$rootscope.setBlock(true);
-    this.apiService
-      .post('/api/category/savecategory', this.cate)
+
+    if (this.cate.cateId === 'create') {
+      this.apiService
+      .post('/api/category', this.cate)
       .subscribe(
         res => this.saveCategoryDoneAction(res),
         error => this.saveCategoryErrorAction(error)
       );
+    } else {
+      this.apiService
+      .put('/api/category', this.cate)
+      .subscribe(
+        res => this.saveCategoryDoneAction(res),
+        error => this.saveCategoryErrorAction(error)
+      );
+    }
   }
 
   public saveCategoryDoneAction(res: any) {

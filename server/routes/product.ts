@@ -14,6 +14,131 @@ const conn = new Config();
 const gencode = new Gencode();
 const db = new Database();
 
+
+/**
+ * Manage product picture
+ *
+ * @param product id
+ * @return product id and error
+ */
+const product_pic_manage = function(param: any) {
+  return new Promise((resolve, reject) => {
+    if ((param.product.pic_id).length > 0) {
+      const update = {
+        table: 'product_pic',
+        query: { status: 'N' },
+        where: { product_id: param.product.id }
+      };
+      const nPic = db.Update(param.connection, update, (success) => {
+        const updatePic = {
+          table: 'product_pic',
+          query: { product_id: param.product.id, status: 'Y' },
+          where: ' id IN (' + (param.product.pic_id).toString() + ')'
+        };
+        const aPic = db.Update(param.connection, updatePic, succes => resolve(param), errors => reject(errors));
+      }, errors => reject(errors));
+    } else {
+      const update = {
+        table: 'product_pic',
+        query: {
+          status: 'N',
+          cover: 'N'
+        },
+        where: { product_id: param.product.id }
+      };
+      const updatePicData = db.Update(param.connection, update, success => resolve(param), errors => reject(errors));
+    }
+  });
+};
+
+/**
+ * Product reccommen
+ * @param function connection
+ * @param object product
+ * @access public
+ * @returns function connection
+ * @returns object product
+ */
+const product_recommend = function(param: any) {
+  return new Promise((resolve, reject) => {
+    if (param.product.recommend === true) {
+      const query = {
+        table: 'product',
+        fields: ['id'],
+        where: { recommend: 'Y' },
+        order: ['rec_row']
+      };
+      db.SelectAll(param.connection, query, (success) => {
+        const recommend_list = [];
+        const recs = [];
+        success.forEach((value, index) => {
+          recs.push(value);
+        });
+        const checkId = recs.indexOf(param.product.id);
+        success.forEach((value, index) => {
+          if (index === 0 && success.length === 3 && checkId === (-1)) {
+            return;
+          }
+          recommend_list.push(value.id);
+        });
+        recommend_list.push(param.product.id);
+        const updateNRecomment = {
+          table: 'product',
+          query: { recommend: 'N' },
+          where: { recommend: 'Y' }
+        };
+        db.Update(param.connection, updateNRecomment, (succes) => {
+          recommend_list.forEach((value, index) => {
+            const updateRecomment = {
+              table: 'product',
+              query: { recommend: 'Y', rec_row: index },
+              where: { id: value }
+            };
+            db.Update(param.connection, updateRecomment, successs => resolve(param), er => reject(er));
+          });
+        }, err => reject(err));
+      }, errers => reject(errers));
+    } else {
+      const updateRecomment = {
+        table: 'product',
+        query: { recommend: 'N', rec_row: '0' },
+        where: { id: param.product.id }
+      };
+      db.Update(param.connection, updateRecomment, success => resolve(param), errors => reject(errors));
+    }
+  });
+};
+
+/**
+ * Set cover pic
+ *
+ * @param {*} product_id
+ * @return product_id and error
+ */
+const product_set_cover = function(param: any){
+  console.log('set cover');
+  return new Promise((resolve, reject) => {
+    if (param.product.coverId !== '0') {
+      const updateNCover = {
+        table: 'product_pic',
+        query: { cover: 'N'},
+        where: { product_id: param.product.id }
+      };
+      db.Update(param.connection, updateNCover, (success) => {
+        const updateCover = {
+          table: 'product_pic',
+          query: { cover: 'Y' },
+          where: { id: param.product.coverId }
+        };
+        db.Update(param.connection, updateCover, succes => resolve(param), error => reject(error));
+      }, errors => reject(errors));
+    } else {
+      resolve(param);
+    }
+  });
+};
+
+
 /**
  * Use functiion
  *
@@ -33,7 +158,6 @@ productRouter.use(function (req, res, next) {
     });
   }
 });
-
 
 /**
  * product list

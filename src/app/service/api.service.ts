@@ -46,6 +46,15 @@ export class ApiService {
       );
     }
 
+    put(url: string, param: any): Observable<ResponseData> {
+      return this.http
+      .put<ResponseData>(this.api + url, JSON.stringify(param), httpOptions)
+      .pipe(
+        tap((res: ResponseData) => this.access(res)),
+        catchError(this.handleError<ResponseData>('PostApi'))
+      );
+    }
+
     public access(res: any) {
         if (res.nologin) {
             console.log('go to new login.');

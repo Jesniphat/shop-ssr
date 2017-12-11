@@ -68,7 +68,7 @@ categoryRouter.get('/', (req: express.Request, res: express.Response, next: expr
 });
 
 // categoryRouter.post('/getcategorybyid', (req: express.Request, res: express.Response, next: express.NextFunction) => { });
-categoryRouter.get('/:id', (req: express.Request, res: express.Response, next: express.NextFunction) => {
+categoryRouter.get('/id/:id', (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const category_id: any = req.params.id;
   const connection: any = conn.init();
   const category: any = req.body;

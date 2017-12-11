@@ -79,7 +79,7 @@ export class CategoryManagerComponent implements OnInit {
   public getCategoryByid(id: any) {
     // this.blockUI.start('Loading...');
     this.apiService
-      .get('/api/category/' + id)
+      .get('/api/category/id/' + id)
       .subscribe(
       res => this.getCategoryByidDoneAction(res),
       error => this.getCategoryByidErrorAction(error)

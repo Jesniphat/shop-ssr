@@ -14,6 +14,7 @@ import { ManagerDashboardComponent } from './manger-dashboard/manager-dashboard/
 import { CategoryListComponent } from './category/category-list/category-list.component';
 import { TableElementComponent } from './table-element/table-element.component';
 import { CategoryManagerComponent } from './category/category-manager/category-manager.component';
+import { ProductListComponent } from './product/product-list/product-list/product-list.component';
 
 @NgModule({
   imports: [
@@ -29,7 +30,8 @@ import { CategoryManagerComponent } from './category/category-manager/category-m
     ManagerDashboardComponent,
     CategoryListComponent,
     TableElementComponent,
-    CategoryManagerComponent
+    CategoryManagerComponent,
+    ProductListComponent
   ],
   providers: [
     Uploader

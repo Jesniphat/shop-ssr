@@ -166,7 +166,7 @@ productRouter.use(function (req, res, next) {
  * @param callback function req res next
  * @return JSON
  */
-productRouter.post('/product_list', (req, res, next) => {
+productRouter.get('/', (req, res, next) => {
   const connection = conn.init();
   const product = req.body;
   // let $scope;
@@ -179,11 +179,10 @@ productRouter.post('/product_list', (req, res, next) => {
           'max(pp.productpic_path) as img'
         ],
         table: 'product p left join product_pic pp on p.id = pp.product_id and pp.cover = \'Y\'',
-        where: {
-          'p.status' : 'Y'
-        },
+        where: {'p.status': 'Y'},
         group: 'p.id'
       };
+      // console.log('line 186: ', gets);
       db.SelectAll(connection, gets, (data) => {
           resolve(data);
         }, (error) => {
@@ -208,6 +207,82 @@ productRouter.post('/product_list', (req, res, next) => {
     });
     connection.end();
   });
+});
+
+
+// productRouter.post('/product_list', (req, res, next) => { });
+/**
+ * Get product by id
+ *
+ * @access public
+ * @param callbackfucnt(@pruduct id)
+ * @return JSON
+ */
+productRouter.get('/:id', (req, res, next) => {
+  const product_id = req.params.id;
+  const connection: any = conn.init();
+  const product: any = req.body;
+  // let $scope;
+  let product_data: any = {};
+
+  const get_product = function($id){
+    return new Promise((resolve, reject) => {
+      const get = {
+        table: 'product',
+        where: {
+          id: $id
+        }
+      };
+      db.SelectRow(connection, get, (data) => {
+        product_data = data;
+        resolve(data.id);
+      }, (error) => {
+        console.log(error);
+        reject('error');
+      });
+    });
+  };
+
+  const get_product_pic = function($id){
+    // console.log('$data = ', $data);
+    return new Promise((resolve, reject) => {
+      const gets = {
+        table: 'product_pic',
+        where: {
+          product_id: $id,
+          status: 'Y'
+        }
+      };
+
+      db.SelectAll(connection, gets, (data) => {
+        product_data.pic = data;
+        resolve('success');
+      }, (error) => {
+        if (error === 'nodata') {
+          resolve('success');
+        } else {
+          reject(error);
+        }
+      });
+    });
+
+  };
+
+    get_product(product_id)
+    .then(get_product_pic)
+    .then(function($d){
+      res.json({
+        status: true,
+        data: product_data
+      });
+      connection.end();
+    }).catch(function($e){
+      res.json({
+        status: false,
+        error: $e
+      });
+      connection.end();
+    });
 });
 
 
@@ -293,6 +368,92 @@ productRouter.post('/getproductbyid', (req, res, next) => {
  * @param {product object}
  * @return JSON
  */
+productRouter.post('/', (req, res, next) => {
+  const connection = conn.init();
+  console.log('save product = ', req.body);
+  const product = req.body;
+  const product_id = '';
+  let product_code = '';
+
+  /**Begin transection */
+  const beginTransection = function(){
+    return new Promise((resolve, reject) => {
+      db.BeginTransaction(connection, success => resolve(success), errors => reject(errors));
+    });
+  };
+
+  /**
+   * Save product
+   *
+   * @return product id and error
+   */
+  const saveProduct = function(){
+    return new Promise((resolve, reject) => {
+      gencode.Code(connection, 'product', 'code', 'P', 5, 1, (max_code) => {
+        product_code = max_code;
+        const insert = {
+          table: 'product',
+          query: {
+            code: product_code,
+            product_name: product.name,
+            product_description: product.desc,
+            product_price: product.price,
+            product_cost: product.cost,
+            created_by: product.staffid,
+            category_id: product.category,
+            uuid: uuidv1()
+          }
+        };
+        const insertProduct = db.Insert(connection, insert,
+        (results) => {
+          product.id = results.insert_id;
+          const result = {
+            connection: connection,
+            product: product
+          };
+          resolve(result);
+        },
+        (errors) => {
+          reject(errors);
+        }
+      );
+      }, (error) => {
+        reject(error);
+      });
+    });
+  };
+
+  beginTransection()
+  .then(saveProduct)
+  .then(product_pic_manage)
+  .then(product_recommend)
+  .then(product_set_cover)
+  .then((product_ids) => {
+    return new Promise((resolve, reject) => {
+      console.log('commit');
+      db.Commit(connection, (success) => {
+        console.log('commited !!');
+        res.json({
+          status: true,
+          data: success
+        });
+        resolve(success);
+      }, errors => reject(errors));
+      connection.end();
+    });
+  }).catch((errors) => {
+    console.log('Roll back error is', errors);
+    db.Rollback(connection, (roll) => {
+      res.json({
+        status: false,
+        error: errors
+      });
+    });
+    connection.end();
+  });
+});
+
+
 productRouter.post('/saveproduct', (req, res, next) => {
   const connection = conn.init();
   console.log('save product = ', req.body);

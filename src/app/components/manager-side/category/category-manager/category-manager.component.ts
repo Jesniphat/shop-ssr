@@ -89,7 +89,7 @@ export class CategoryManagerComponent implements OnInit {
   public getCategoryByidDoneAction(res: any) {
     if (res.status === true) {
       // console.log(res);
-      const cateResData = res.data[0];
+      const cateResData = res.data;
       this.cate.cateId = cateResData.id;
       this.cate.cateName = cateResData.cate_name;
       this.cate.cateDescription = cateResData.cate_description;

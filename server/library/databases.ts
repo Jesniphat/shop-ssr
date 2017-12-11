@@ -110,7 +110,7 @@ class Database {
     });
   }
 
-  public Insert(connection, data, success, errors){
+  public Insert(connection, data, success, errors) {
     let $scrope;
     if (typeof(data) === 'object') {
 

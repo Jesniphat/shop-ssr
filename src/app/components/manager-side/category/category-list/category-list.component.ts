@@ -68,9 +68,8 @@ export class CategoryListComponent implements OnInit {
 	 */
   public getCategoryList() {
     // this.$rootScope.setBlock(true);
-    const id = 'all';
     this.apiService
-      .get('/api/category/' + id)
+      .get('/api/category')
       .subscribe(
       data => this.getCategoryDoneAction(data), // OR this.categoryLists = data.data,
       error => this.errorAction(error)

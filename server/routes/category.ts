@@ -25,8 +25,7 @@ categoryRouter.use((req: express.Request, res: express.Response, next: express.N
   }
 });
 
-categoryRouter.get('/:id', (req: express.Request, res: express.Response, next: express.NextFunction) => {
-  const category_id: any = req.params.id;
+categoryRouter.get('/', (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const connection: any = conn.init();
   const category: any = req.body;
   let $scope: any;
@@ -34,18 +33,12 @@ categoryRouter.get('/:id', (req: express.Request, res: express.Response, next: e
   // let where = [];
   const category_list: any = function(){
     return new promise((resolve, reject) => {
-      let where: any = {status: 'Y'};
-      if (category_id !== 'all') {
-        where = {
-          status: 'Y',
-          id: category_id
-        };
-      }
-
       const gets: any = {
         fields: '*, \'\' as product_qty ',
         table: 'category',
-        where: where
+        where: {
+          status: 'Y'
+        }
       };
       db.SelectAll(connection, gets, (data) => {
           $scope = data;
@@ -75,6 +68,46 @@ categoryRouter.get('/:id', (req: express.Request, res: express.Response, next: e
 });
 
 // categoryRouter.post('/getcategorybyid', (req: express.Request, res: express.Response, next: express.NextFunction) => { });
+categoryRouter.get('/:id', (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  const category_id: any = req.params.id;
+  const connection: any = conn.init();
+  const category: any = req.body;
+  let $scope: any;
+
+  const getcategorybyid: any = function(){
+    return new promise((resolve, reject) => {
+      const where: any = {id: category_id};
+      const gets: any = {
+        fields: ['*'],
+        table:  'category',
+        where:  where
+      };
+      db.SelectRow(connection, gets,
+        (data) => {
+          $scope = data;
+          resolve(data);
+        }, (error) => {
+          console.log(error);
+          reject(error);
+      });
+    });
+  };
+
+  getcategorybyid()
+  .then(function(data){
+    res.json({
+      status: true,
+      data: data
+    });
+    connection.end();
+  }).catch(function(e){
+    res.json({
+      status: false,
+      error: e
+    });
+    connection.end();
+  });
+});
 
 categoryRouter.post('/', (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const connection: any = conn.init();

@@ -34,7 +34,7 @@ export class CategoryManagerComponent implements OnInit {
     cateName: '',
     cateDescription: '',
     selectedStatus: 'Y',
-    coverPic: '',
+    coverPic: 'public/images/empty-image.png',
     cateImage: ''
   };
 
@@ -94,6 +94,7 @@ export class CategoryManagerComponent implements OnInit {
       this.cate.cateName = cateResData.cate_name;
       this.cate.cateDescription = cateResData.cate_description;
       this.cate.selectedStatus = cateResData.status;
+      this.cate.coverPic = cateResData.cover_pic;
       this.uploadedFiles.coverPic = cateResData.cover_pic;
     } else {
       console.log('No data');
@@ -177,7 +178,7 @@ export class CategoryManagerComponent implements OnInit {
       cateName: '',
       cateDescription: '',
       selectedStatus: 'Y',
-      coverPic: '',
+      coverPic: 'public/images/empty-image.png',
       cateImage: ''
     };
 
@@ -209,9 +210,9 @@ export class CategoryManagerComponent implements OnInit {
       }
       //  let pic_name = JSON.parse(response);
        if (pic_name.status === true) {
-          pic_name.data.coverPic = this.imgLink + pic_name.data.pic_path;
+          pic_name.data.coverPic = /* this.imgLink + */ pic_name.data.pic_path;
           pic_name.data.flag = 'c';
-          this.cate.coverPic = this.imgLink + pic_name.data.pic_path;
+          this.cate.coverPic = /* this.imgLink + */ pic_name.data.pic_path;
           this.uploadedFiles = pic_name.data;
           console.log(this.uploadedFiles);
           console.log(this.cate.coverPic);

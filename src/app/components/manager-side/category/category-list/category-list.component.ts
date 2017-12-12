@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, ElementRef, Inject, AfterViewInit, ViewChild } from '@angular/core';
+import { BrowserModule, Meta, Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { ApiService } from '../../../../service/api.service';
 import { RootscopeService } from '../../../../service/rootscope.service';
@@ -42,10 +43,19 @@ export class CategoryListComponent implements OnInit {
 	 * @return void
 	 */
   constructor(
+    public meta: Meta,
+    public title: Title,
     public router: Router,
     public apiService: ApiService,
     public $rootScope: RootscopeService
-  ) { }
+  ) {
+    title.setTitle('Category');
+    meta.addTags([
+      { name: 'author',   content: 'Coursetro.com'},
+      { name: 'keywords', content: 'category page list manager'},
+      { name: 'description', content: 'Show all categoly list and edit' }
+    ]);
+  }
 
   /**
 	 * Get Category list

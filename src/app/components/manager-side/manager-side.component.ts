@@ -63,7 +63,7 @@ export class ManagerSideComponent implements OnInit {
     console.log('ManagerSite');
     this.$rootScope.doBlock$.subscribe(data => this.block(data));
     this.$rootScope.headerText$.subscribe(text => this.headerText = text || '');
-    this.menuListService.$menuList.subscribe(data => this.menu(data));
+    this.menuListService.menuList$.subscribe(data => this.menu(data));
 
     this.menuListService.getMenuList(true, 'system');
   }

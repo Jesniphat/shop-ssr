@@ -218,7 +218,7 @@ productRouter.get('/', (req, res, next) => {
  * @param callbackfucnt(@pruduct id)
  * @return JSON
  */
-productRouter.get('/:id', (req, res, next) => {
+productRouter.get('/id/:id', (req, res, next) => {
   const product_id = req.params.id;
   const connection: any = conn.init();
   const product: any = req.body;
@@ -363,7 +363,6 @@ productRouter.post('/getproductbyid', (req, res, next) => {
 
 /**
  * Save product
- *
  * @access public
  * @param {product object}
  * @return JSON
@@ -383,28 +382,44 @@ productRouter.post('/', (req, res, next) => {
   };
 
   /**
+   * Gencode
+   * @access public
+   * @returns maxcode: string
+   */
+  const getCode = function() {
+    return new Promise((resolve, reject) => {
+      gencode.Code(connection, 'product', 'code', 'P', 5, 1,
+        maxcode => {
+          resolve(maxcode);
+        },
+        error => {
+          reject(error);
+        }
+      );
+    });
+  };
+
+  /**
    * Save product
-   *
    * @return product id and error
    */
-  const saveProduct = function(){
+  const saveProduct = function(code: any){
     return new Promise((resolve, reject) => {
-      gencode.Code(connection, 'product', 'code', 'P', 5, 1, (max_code) => {
-        product_code = max_code;
-        const insert = {
-          table: 'product',
-          query: {
-            code: product_code,
-            product_name: product.name,
-            product_description: product.desc,
-            product_price: product.price,
-            product_cost: product.cost,
-            created_by: product.staffid,
-            category_id: product.category,
-            uuid: uuidv1()
-          }
-        };
-        const insertProduct = db.Insert(connection, insert,
+      product_code = code;
+      const insert = {
+        table: 'product',
+        query: {
+          code: product_code,
+          product_name: product.name,
+          product_description: product.desc,
+          product_price: product.price,
+          product_cost: product.cost,
+          created_by: product.staffid,
+          category_id: product.category,
+          uuid: uuidv1()
+        }
+      };
+      const insertProduct = db.Insert(connection, insert,
         (results) => {
           product.id = results.insert_id;
           const result = {
@@ -417,9 +432,82 @@ productRouter.post('/', (req, res, next) => {
           reject(errors);
         }
       );
-      }, (error) => {
-        reject(error);
+    });
+  };
+
+  beginTransection()
+  .then(gencode)
+  .then(saveProduct)
+  .then(product_pic_manage)
+  .then(product_recommend)
+  .then(product_set_cover)
+  .then((product_ids) => {
+    return new Promise((resolve, reject) => {
+      console.log('commit');
+      db.Commit(connection, (success) => {
+        console.log('commited !!');
+        res.json({
+          status: true,
+          data: success
+        });
+        resolve(success);
+      }, errors => reject(errors));
+      connection.end();
+    });
+  }).catch((errors) => {
+    console.log('Roll back error is', errors);
+    db.Rollback(connection, (roll) => {
+      res.json({
+        status: false,
+        error: errors
       });
+    });
+    connection.end();
+  });
+});
+
+/**
+ * Edit product
+ * @param url /
+ * @param request
+ * @access public
+ * @return JSON
+ */
+productRouter.put('/', (req, res, next) => {
+  const connection = conn.init();
+  console.log('save product = ', req.body);
+  const product = req.body;
+
+  /**Begin transection */
+  const beginTransection = function(){
+    return new Promise((resolve, reject) => {
+      db.BeginTransaction(connection, success => resolve(success), errors => reject(errors));
+    });
+  };
+
+  /**
+   * Save product
+   *
+   * @return product id and error
+   */
+  const saveProduct = function(){
+    return new Promise((resolve, reject) => {
+      const update = {
+        table: 'product',
+        query: {
+          product_name: product.name,
+          product_description: product.desc,
+          product_price: product.price,
+          product_cost: product.cost,
+          created_by: product.staffid,
+          category_id: product.category
+        },
+        where: { id: product.id }
+      };
+      const updateProduct = db.Update(connection, update,
+        results => resolve({connection: connection, product: product}),
+        error => reject(error)
+      );
     });
   };
 

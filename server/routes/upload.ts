@@ -33,7 +33,7 @@ uploadRouter.post('/product', uploadFile.single('file'), function (req, res, nex
     const deferred = promise.pending();
     const newName = moment().format('YYYY-MM-DD_hh-mm-ss') + '_' + req.file.originalname;
 
-    const dirImg = __dirname + '/../public/images/product-img/';
+    const dirImg = './dist/public/images/product-img/';
     if (!fs.existsSync(dirImg)) {
       fs.mkdirSync(dirImg);
     }

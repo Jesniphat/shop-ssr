@@ -24,10 +24,10 @@
             {{item[column.column]}}
           </td>
           <td *ngIf="isAction.status" style="text-align:center;">
-            <button *ngIf="isAction.edit" class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored" (click)="edit(item)">
-              <i class="material-icons">mode_edit</i>
+            <button *ngIf="isAction.edit" class="w3-button" (click)="edit(item)">
+              <i class="fas fa-edit"></i>
             </button>
-            <button *ngIf="isAction.delete" class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored" (click)="delete(item)">
+            <button *ngIf="isAction.delete" class="w3-button" (click)="delete(item)">
               <i class="material-icons">mode_edit</i>
             </button>
           </td>

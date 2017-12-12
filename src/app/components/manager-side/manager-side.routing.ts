@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { ManagerSideComponent } from './manager-side.component';
 
-import { ManagerDashboardComponent } from './manger-dashboard/manager-dashboard/manager-dashboard.component';
+import { ManagerDashboardComponent } from './dashboard/manager-dashboard/manager-dashboard.component';
 import { CategoryListComponent } from './category/category-list/category-list.component';
 import { CategoryManagerComponent } from './category/category-manager/category-manager.component';
 import { ProductListComponent } from './product/product-list/product-list/product-list.component';

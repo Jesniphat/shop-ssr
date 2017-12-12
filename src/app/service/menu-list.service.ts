@@ -9,7 +9,7 @@ export class MenuListService {
    *
    * Observable varaible // use it!!
    */
-  public $menuList: Observable<any>;
+  public menuList$: Observable<any>;
 
   /**
    *
@@ -18,7 +18,7 @@ export class MenuListService {
   public _menuList: any;
 
   constructor(public apiService: ApiService) {
-    this.$menuList = new Observable(observer => this._menuList = observer);
+    this.menuList$ = new Observable(observer => this._menuList = observer);
   }
 
   public getMenuList(hasmenu: boolean, page: string) {

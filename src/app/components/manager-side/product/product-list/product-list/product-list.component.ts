@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
+import { BrowserModule, Meta, Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { ApiService } from '../../../../../service/api.service';
 import { RootscopeService } from '../../../../../service/rootscope.service';
@@ -19,22 +20,33 @@ export class ProductListComponent implements OnInit {
   public products: any = [];
   public filterText: any = '';
   public pageNo: any = 1;
-  public uploadUrl: any = '/upload/product';
+  public uploadUrl: any = '/api/upload/product';
   public imgLink: any = '';
   public cols = ['product_name', 'product_description', 'product_qty', 'product_price'];
   public delete_id: any = '';
   public productId: any = 'create';
 
   constructor(
+    public meta: Meta,
+    public title: Title,
     public router: Router,
     public apiService: ApiService ,
     public $rootscope: RootscopeService,
     public _elRef: ElementRef,
     public productStoreService: ProductStorageService
-  ) { }
+  ) {
+    title.setTitle('Product');
+    meta.addTags([
+      { name: 'author',   content: 'Coursetro.com'},
+      { name: 'keywords', content: 'product page list manager'},
+      { name: 'description', content: 'Show all product list and edit' }
+    ]);
+  }
 
   ngOnInit() {
     console.log('product_list.component');
+    this.$rootscope.changeHeaderText('product list');
+
     this.uploadUrl = this.apiService.upl + this.uploadUrl;
     this.imgLink = this.apiService.img;
     this.getCategoryList();
@@ -93,11 +105,11 @@ export class ProductListComponent implements OnInit {
   private getAllProductDoneAction(data: any) {
     // console.log(data);
     this.productLists = data.data;
-    if (this.productLists.length > 0) {
-      for (let z = 0; z < this.productLists.length; z++) {
-          this.productLists[z].img = this.imgLink + this.productLists[z].img;
-      }
-    }
+    // if (this.productLists.length > 0) {
+    //   for (let z = 0; z < this.productLists.length; z++) {
+    //       this.productLists[z].img = this.imgLink + this.productLists[z].img;
+    //   }
+    // }
     this.$rootscope.setBlock(false);
   }
 

@@ -25,6 +25,13 @@ categoryRouter.use((req: express.Request, res: express.Response, next: express.N
   }
 });
 
+/**
+ * Get All Category
+ * @param url: string
+ * @param requert: object
+ * @access public
+ * @returns data: JSON
+ */
 categoryRouter.get('/', (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const connection: any = conn.init();
   const category: any = req.body;
@@ -68,6 +75,13 @@ categoryRouter.get('/', (req: express.Request, res: express.Response, next: expr
 });
 
 // categoryRouter.post('/getcategorybyid', (req: express.Request, res: express.Response, next: express.NextFunction) => { });
+/**
+ * Get Category by id
+ * @param url/id/:id: strung
+ * @param request: object
+ * @access public
+ * @returns data: JSON
+ */
 categoryRouter.get('/id/:id', (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const category_id: any = req.params.id;
   const connection: any = conn.init();
@@ -109,6 +123,14 @@ categoryRouter.get('/id/:id', (req: express.Request, res: express.Response, next
   });
 });
 
+
+/**
+ * Save category
+ * @param url/ : string
+ * @param requires: object
+ * @access public
+ * @returns data: JSON
+ */
 categoryRouter.post('/', (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const connection: any = conn.init();
   const category: any = req.body;
@@ -180,6 +202,13 @@ categoryRouter.post('/', (req: express.Request, res: express.Response, next: exp
   });
 });
 
+
+/**
+ * Edit category
+ * @argument /: string, requires: object
+ * @access public
+ * @returns data: JSON
+ */
 categoryRouter.put('/', (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const connection: any = conn.init();
   const category: any = req.body;

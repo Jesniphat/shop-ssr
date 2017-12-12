@@ -5,13 +5,14 @@
     <button class="w3-bar-item w3-button w3-large w3-hide-large" (click)="w3_close()">Close &times;</button>
     <a class="w3-bar-item w3-button" *ngFor="let menu of menuLists" routerLinkActive="active" 
     [routerLink]="[menu.module, { outlets: { 'm': menu.outlets } }]">
-      {{menu.name}}
+      <i [ngClass]="menu.icon"></i> {{menu.name}}
     </a>
   </nav>
 
   <!-- Overlay -->
   <div class="w3-overlay w3-hide-large w3-animate-opacity" id="myOverlay" (click)="w3_close()" style="cursor:pointer"></div>
 
+  <!-- main page -->
   <div class="w3-main" style="margin-left:250px">
     <!-- Top -->
     <div id="myTop" class="w3-container w3-top w3-theme w3-large">

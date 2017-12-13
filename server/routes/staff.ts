@@ -7,9 +7,9 @@ import { Config } from '../library/configs';
 import { Database } from '../library/databases';
 
 const staffRouter: express.Router = express.Router();
-const permission: any = new Permission();
-const conn: any = new Config();
-const db: any = new Database();
+const permission = new Permission();
+const conn = new Config();
+const db = new Database();
 
 staffRouter.use(function (req, res, next) {
   // console.log('perrmission : ', permission.readToken(req));
@@ -28,12 +28,6 @@ staffRouter.post('/createstaff', (req, res, next) => {
   const con = conn.init();
   const staff = req.body;
 
-  const beginTransection = function(){
-    return new Promise((resolve, reject) => {
-      db.BeginTransaction(con, success => resolve(success), errors => reject(errors));
-    });
-  };
-
   const insertStaff = function(){
     return new Promise((resolve, reject) => {
       const insertData = {
@@ -50,7 +44,7 @@ staffRouter.post('/createstaff', (req, res, next) => {
     });
   };
 
-  beginTransection()
+  db.beginTransection(con)
   .then(insertStaff)
   .then((data) => {
     console.log('commit');
@@ -77,12 +71,6 @@ staffRouter.post('/updatestaff', (req, res, next) => {
   const con = conn.init();
   const staff = req.body;
 
-  const beginTransection = function(){
-    return new Promise((resolve, reject) => {
-      db.BeginTransaction(con, success => resolve(success), errors => reject(errors));
-    });
-  };
-
   const updataStaff = function(){
     return new Promise((resolve, reject) => {
       const updataStaffdata = {
@@ -98,7 +86,7 @@ staffRouter.post('/updatestaff', (req, res, next) => {
     });
   };
 
-  beginTransection()
+  db.beginTransection(con)
   .then(updataStaff)
   .then((result) => {
     console.log('uo');

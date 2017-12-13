@@ -8,9 +8,9 @@ import { Database } from '../library/databases';
 
 const categoryRouter: express.Router = express.Router();
 
-const conn: any = new Config();
-const permission: any = new Permission();
-const db: any = new Database();
+const conn = new Config();
+const permission = new Permission();
+const db = new Database();
 
 categoryRouter.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
 //   console.log('perrmission : ', permission.readToken(req));
@@ -136,18 +136,7 @@ categoryRouter.post('/', (req: express.Request, res: express.Response, next: exp
   const category: any = req.body;
   let $scope: any = '';
 
-  const transection = function(){
-    console.log('transection');
-    return new promise((resolve, reject) => {
-      db.BeginTransaction(connection, (success) => {
-        resolve(success);
-      }, (error) => {
-        reject(error);
-      });
-    });
-  };
-
-  const savecetegory: any = function() {
+  const savecetegory: any = function(transection) {
     return new promise((resolve, reject) => {
         const data = {
         query: {
@@ -174,7 +163,7 @@ categoryRouter.post('/', (req: express.Request, res: express.Response, next: exp
   };
 
 
-  transection()
+  db.beginTransection(connection)
   .then(savecetegory)
   .then(function(d){
     return new promise((resolve, reject) => {
@@ -214,17 +203,6 @@ categoryRouter.put('/', (req: express.Request, res: express.Response, next: expr
   const category: any = req.body;
   let $scope: any = '';
 
-  const transection = function(){
-    console.log('transection');
-    return new promise((resolve, reject) => {
-      db.BeginTransaction(connection, (success) => {
-        resolve(success);
-      }, (error) => {
-        reject(error);
-      });
-    });
-  };
-
   const savecetegory: any = function() {
     return new promise((resolve, reject) => {
       const data = {
@@ -252,7 +230,7 @@ categoryRouter.put('/', (req: express.Request, res: express.Response, next: expr
   };
 
 
-  transection()
+  db.beginTransection(connection)
   .then(savecetegory)
   .then(function(d){
     return new promise((resolve, reject) => {

@@ -374,13 +374,6 @@ productRouter.post('/', (req, res, next) => {
   const product_id = '';
   let product_code = '';
 
-  /**Begin transection */
-  const beginTransection = function(){
-    return new Promise((resolve, reject) => {
-      db.BeginTransaction(connection, success => resolve(success), errors => reject(errors));
-    });
-  };
-
   /**
    * Gencode
    * @access public
@@ -435,7 +428,7 @@ productRouter.post('/', (req, res, next) => {
     });
   };
 
-  beginTransection()
+  db.beginTransection(connection)
   .then(gencode)
   .then(saveProduct)
   .then(product_pic_manage)
@@ -478,13 +471,6 @@ productRouter.put('/', (req, res, next) => {
   console.log('save product = ', req.body);
   const product = req.body;
 
-  /**Begin transection */
-  const beginTransection = function(){
-    return new Promise((resolve, reject) => {
-      db.BeginTransaction(connection, success => resolve(success), errors => reject(errors));
-    });
-  };
-
   /**
    * Save product
    *
@@ -511,7 +497,7 @@ productRouter.put('/', (req, res, next) => {
     });
   };
 
-  beginTransection()
+  db.beginTransection(connection)
   .then(saveProduct)
   .then(product_pic_manage)
   .then(product_recommend)
@@ -548,13 +534,6 @@ productRouter.post('/saveproduct', (req, res, next) => {
   const product = req.body;
   const product_id = '';
   let product_code = '';
-
-  /**Begin transection */
-  const beginTransection = function(){
-    return new Promise((resolve, reject) => {
-      db.BeginTransaction(connection, success => resolve(success), errors => reject(errors));
-    });
-  };
 
   /**
    * Save product
@@ -723,7 +702,7 @@ productRouter.post('/saveproduct', (req, res, next) => {
     });
   };
 
-  beginTransection()
+  db.beginTransection(connection)
   .then(saveProduct)
   .then(picManage)
   .then(recommendProduct)
@@ -766,16 +745,6 @@ productRouter.post('/delete_product', (req, res, next) => {
   const connection = conn.init();
 
   /**
-   * Begintranseccion
-   */
-  const beginTransection = function(){
-    return new Promise((resolve, reject) => {
-      db.BeginTransaction(connection, success => resolve(success), errors => reject(errors));
-    });
-  };
-
-
-  /**
    * Delete product
    *
    * @return void
@@ -797,7 +766,7 @@ productRouter.post('/delete_product', (req, res, next) => {
    *
    * @return JSON
    */
-  beginTransection()
+  db.beginTransection(connection)
   .then(deleteProd)
   .then(function(){
     return new Promise((resolve, reject) => {
@@ -951,14 +920,6 @@ productRouter.post('/saveStockIn', (req, res, next) => {
   const connection = conn.init();
   const stock = req.body;
 
-  /**Begin transection */
-  const beginTransection = function(){
-    return new Promise((resolve, reject) => {
-      db.BeginTransaction(connection, success => resolve(success), errors => reject(errors));
-    });
-  };
-
-
   /** Save stock */
   const saveStock = function(){
     return new Promise((resolve, reject) => {
@@ -978,7 +939,7 @@ productRouter.post('/saveStockIn', (req, res, next) => {
     });
   };
 
-  beginTransection()
+  db.beginTransection(connection)
   .then(saveStock)
   .then((stock_id) => {
     return new Promise((resolve, reject) => {

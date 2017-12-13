@@ -1,16 +1,19 @@
-// import { Config } from './config';
+import * as Promise from 'bluebird';
 
 class Database {
   // constructor(public conn: Config) { }
   constructor() { }
 
-  public BeginTransaction(connection, success, errors) {
-    connection.beginTransaction((err) => {
-      if (err) {
-        errors(err);
-      } else {
-        success('start transaction');
-      }
+  public beginTransection(connection: any) {
+    // console.log('config begin transection');
+    return new Promise((resolve, reject) => {
+      connection.beginTransaction((err) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve('start transaction');
+        }
+      });
     });
   }
 

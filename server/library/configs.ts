@@ -1,3 +1,5 @@
+import * as Promise from 'bluebird';
+
 export class Config {
   public db = null;
 
@@ -22,6 +24,19 @@ export class Config {
       }
     });
     return this.db;
+  }
+
+  public beginTransection(connection) {
+    console.log('config begin transection');
+    return new Promise((resolve, reject) => {
+      connection.beginTransaction((err) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve('start transaction');
+        }
+      });
+    });
   }
 }
 

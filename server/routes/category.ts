@@ -252,7 +252,7 @@ categoryRouter.put('/', (req: express.Request, res: express.Response, next: expr
   };
 
 
-  transection()
+  conn.beginTransection(connection)
   .then(savecetegory)
   .then(function(d){
     return new promise((resolve, reject) => {

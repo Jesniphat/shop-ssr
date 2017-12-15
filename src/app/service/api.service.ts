@@ -27,7 +27,7 @@ export class ApiService {
 /** GET data from the server */
   get(url: string): Observable<ResponseData> {
     return this.http
-      .get<ResponseData>( this.api + url)
+      .get<ResponseData>( this.api + url, httpOptions)
       .pipe(
         tap((res: ResponseData) => this.access(res)),
         catchError(this.handleError<ResponseData>('GetApi'))

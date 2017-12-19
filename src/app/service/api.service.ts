@@ -24,8 +24,8 @@ export class ApiService {
     private router: Router
   ) {}
 
-/** GET data from the server */
-  get(url: string): Observable<ResponseData> {
+  /** GET data from the server */
+  public get(url: string): Observable<ResponseData> {
     return this.http
       .get<ResponseData>( this.api + url, httpOptions)
       .pipe(
@@ -34,37 +34,43 @@ export class ApiService {
       );
     }
 
-    //////// Save methods //////////
 
-  /** POST: add a new hero to the server */
-    post(url: string, param: any): Observable<ResponseData> {
-      return this.http
-      .post<ResponseData>(this.api + url, JSON.stringify(param), httpOptions)
-      .pipe(
-        tap((res: ResponseData) => this.access(res)),
-        catchError(this.handleError<ResponseData>('PostApi'))
-      );
-    }
+  //////// Save methods //////////
 
-    put(url: string, param: any): Observable<ResponseData> {
-      return this.http
-      .put<ResponseData>(this.api + url, JSON.stringify(param), httpOptions)
-      .pipe(
-        tap((res: ResponseData) => this.access(res)),
-        catchError(this.handleError<ResponseData>('PostApi'))
-      );
-    }
+  /** POST: Add a new hero to the server */
+  public post(url: string, param: any): Observable<ResponseData> {
+    return this.http
+    .post<ResponseData>(this.api + url, JSON.stringify(param), httpOptions)
+    .pipe(
+      tap((res: ResponseData) => this.access(res)),
+      catchError(this.handleError<ResponseData>('PostApi'))
+    );
+  }
 
-    public access(res: any) {
-        if (res.nologin) {
-            console.log('go to new login.');
-            this.router.navigate(['/system-login']);
-            return res || { };
-        }else {
-            // console.log("body = ", body);
-            return res || { };
-        }
-    }
+  /** PUT: Update some record */
+  public put(url: string, param: any): Observable<ResponseData> {
+    return this.http
+    .put<ResponseData>(this.api + url, JSON.stringify(param), httpOptions)
+    .pipe(
+      tap((res: ResponseData) => this.access(res)),
+      catchError(this.handleError<ResponseData>('PostApi'))
+    );
+  }
+
+  /**
+   * If data not error we need to check permistion or something
+   * @param response
+   */
+  private access(res: any) {
+      if (res.nologin) {
+          console.log('go to new login.');
+          this.router.navigate(['/system-login']);
+          return res || { };
+      }else {
+          // console.log('body = ', body);
+          return res || { };
+      }
+  }
 
   /**
 	 * Handle Http operation that failed.

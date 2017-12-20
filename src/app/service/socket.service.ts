@@ -9,7 +9,7 @@ export class SocketService {
   /**
    * Socket cliend
    */
-  public socket = io('http://localhost:8800');
+  public socket = io.connect('http://localhost:8800', {reconnect: true});
   public loginData: any;
 
   /**

@@ -218,7 +218,7 @@ productRouter.get('/', (req, res, next) => {
  * @param callbackfucnt(@pruduct id)
  * @return JSON
  */
-productRouter.get('/id/:id', (req, res, next) => {
+productRouter.get('/:id', (req, res, next) => {
   const product_id = req.params.id;
   const connection: any = conn.init();
   const product: any = req.body;

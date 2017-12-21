@@ -13,6 +13,7 @@
       "type": "chrome",
       "request": "attach",
       "url": "http://localhost:4200/#",
+      "port": 4200,
       "webRoot": "${workspaceRoot}"
     },
     {

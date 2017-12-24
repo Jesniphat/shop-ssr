@@ -1,6 +1,6 @@
 import * as Promise from 'bluebird';
 
-class Database {
+export class Database {
   // constructor(public conn: Config) { }
   constructor() { }
 
@@ -190,4 +190,4 @@ class Database {
   }
 }
 
-export { Database };
+// export { Database };

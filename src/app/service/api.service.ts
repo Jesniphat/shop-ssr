@@ -18,6 +18,7 @@ export class ApiService {
     public api = '';
     public upl = '';
     public img = 'http://localhost:8800/';
+    // public img = 'http://13.59.164.106:8800/';
 
   constructor(
     private http: HttpClient,

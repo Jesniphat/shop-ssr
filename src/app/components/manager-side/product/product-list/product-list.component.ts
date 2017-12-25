@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
 import { BrowserModule, Meta, Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { ApiService } from '../../../../../service/api.service';
-import { RootscopeService } from '../../../../../service/rootscope.service';
+import { ApiService } from '../../../../service/api.service';
+import { RootscopeService } from '../../../../service/rootscope.service';
 // import { ProductManageComponent } from '../product-manage/product-manage.component';
-import { ProductStorageService } from '../../../../../service/product-storage.service';
+import { ProductStorageService } from '../../../../service/product-storage.service';
 
 @Component({
   selector: 'app-product-list',

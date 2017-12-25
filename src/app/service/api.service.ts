@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 
+import { environment } from '../../environments/environment';
+
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { catchError, map, tap } from 'rxjs/operators';
@@ -18,12 +20,14 @@ export class ApiService {
     public api = '';
     public upl = '';
     public img = 'http://localhost:8800/';
-    // public img = 'http://13.59.164.106:8800/';
+    // public img = 'http://13.59.164.106:8800/' environment.production;
 
   constructor(
     private http: HttpClient,
     private router: Router
-  ) {}
+  ) {
+    console.log(environment);
+  }
 
   /** GET data from the server */
   public get(url: string): Observable<ResponseData> {

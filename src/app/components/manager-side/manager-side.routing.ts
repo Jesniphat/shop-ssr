@@ -6,7 +6,7 @@ import { ManagerSideComponent } from './manager-side.component';
 import { ManagerDashboardComponent } from './dashboard/manager-dashboard/manager-dashboard.component';
 import { CategoryListComponent } from './category/category-list/category-list.component';
 import { CategoryManagerComponent } from './category/category-manager/category-manager.component';
-import { ProductListComponent } from './product/product-list/product-list/product-list.component';
+import { ProductListComponent } from './product/product-list/product-list.component';
 
 const routes: Routes = [
     { path: 'manager', component: ManagerSideComponent, children: [

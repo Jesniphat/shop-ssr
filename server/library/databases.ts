@@ -44,8 +44,12 @@ export class Database {
     let limit = '';
 
     if (typeof(data.where) === 'object') {
-      for (let keys in data.where) {
-        where += ' AND ' + keys + ' = \'' + data.where[keys] + '\'';
+      for (const keys in data.where) {
+        if (keys) {
+          where += ' AND ' + keys + ' = \'' + data.where[keys] + '\'';
+        } else {
+          continue;
+        }
       }
     } else if (data.where !== undefined) {
       where += ' AND ' + data.where;
@@ -83,8 +87,12 @@ export class Database {
     let limit = '';
 
     if (typeof(data.where) === 'object') {
-      for (let keys in data.where){
-        where += ' AND ' + keys + ' = \'' + data.where[keys] + '\'';
+      for (const keys in data.where) {
+        if (keys) {
+          where += ' AND ' + keys + ' = \'' + data.where[keys] + '\'';
+        } else {
+          continue;
+        }
       }
     } else if (data.where !== undefined) {
       where += ' AND ' + data.where;
@@ -140,16 +148,24 @@ export class Database {
     const fields = [];
     const set = [];
     let where = ' WHERE 1 = 1 ';
-    for (let keys in data.query) {
-      fields.push(keys + ' = ?');
-      set.push(data.query[keys]);
+    for (const keys in data.query) {
+      if (keys) {
+        fields.push(keys + ' = ?');
+        set.push(data.query[keys]);
+      } else {
+        continue;
+      }
     }
     fields.toString();
 
-    if (typeof(data.where) === 'object'){
-      for(let keys in data.where){
-        where += ' AND ' + keys + ' = ?';
-        set.push(data.where[keys]);
+    if (typeof(data.where) === 'object') {
+      for (const keys in data.where) {
+        if (keys) {
+          where += ' AND ' + keys + ' = ?';
+          set.push(data.where[keys]);
+        } else {
+          continue;
+        }
       }
     } else if (data.where !== undefined) {
       where += ' AND ' + data.where;
@@ -170,8 +186,12 @@ export class Database {
     let $scrope;
     let where = ' WHERE 1 = 1 ';
     if (typeof(data.where) === 'object') {
-      for(let keys in data.where){
-        where += ' AND ' + keys + ' = \'' + data.where[keys] + '\'';
+      for (const keys in data.where) {
+        if (keys) {
+          where += ' AND ' + keys + ' = \'' + data.where[keys] + '\'';
+        } else {
+          continue;
+        }
       }
     } else if (data.where !== undefined) {
       where += ' AND ' + data.where;

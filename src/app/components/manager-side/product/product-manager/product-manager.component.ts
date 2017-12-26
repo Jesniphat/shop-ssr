@@ -5,6 +5,7 @@ import { RootscopeService } from '../../../../service/rootscope.service';
 import { Uploader } from 'angular2-http-file-upload';
 import { MyUploadItem } from '../../../../upload-item';
 import { DialogService } from '../../../../service/dialog.service';
+import { AlertsService } from '../../../../service/alerts.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
 @Component({
@@ -58,7 +59,7 @@ export class ProductManagerComponent implements OnInit {
     public $rootScope: RootscopeService,
     public uploaderService: Uploader,
     public _elRef: ElementRef,
-    public dialogService: DialogService
+    public alerts: AlertsService
   ) {
     this.storage = localStorage;
   }
@@ -76,7 +77,7 @@ export class ProductManagerComponent implements OnInit {
       } else {
         this.product.id = this.productId;
       }
-      this.dialog = this.dialogService.build(document.querySelector('dialog'));
+      // this.dialog = this.dialogService.build(document.querySelector('dialog'));
       this.getCategoryList();
   }
 
@@ -84,7 +85,7 @@ export class ProductManagerComponent implements OnInit {
     return new Promise<boolean>((resolve, reject) => {
       const param = {};
       this.apiService
-        .post('/api/category/category_list', param)
+        .get('/api/category')
         .subscribe(
         (data) => {
           if (data.status === true) {
@@ -106,7 +107,7 @@ export class ProductManagerComponent implements OnInit {
     });
   }
 
-  getProductByid(prodId: any) {
+  public getProductByid(prodId: any) {
   this.blockUI.start('Loading...');
   const param = {
     product_id: prodId
@@ -119,7 +120,7 @@ export class ProductManagerComponent implements OnInit {
     );
   }
 
-  getProductByidDoneAction(res) {
+  public getProductByidDoneAction(res) {
     if (res.status === true) {
       const prodResData = res.data;
       this.product.id = prodResData.id;
@@ -148,8 +149,147 @@ export class ProductManagerComponent implements OnInit {
     this.blockUI.stop();
   }
 
-  getProductByidErrorAction(error) {
+  public getProductByidErrorAction(error) {
     this.blockUI.stop();
+  }
+
+  public changeCategory(newValue: any) {
+    console.log(newValue);
+    this.product.category = newValue;
+  }
+
+  public uploadFile(data: any) {
+    this.blockUI.start('Uploading...');
+    console.log('file = ', data.target.files[0]);
+    const uploadFile = data.target.files[0];
+
+    const myUploadItem = new MyUploadItem(uploadFile, this.uploadUrl);
+    myUploadItem.formData = { FormDataKey: 'Form Data Value' };  // (optional) form data can be sent with file
+
+    this.uploaderService.onSuccessUpload = (item, response, status, headers) => {
+      // console.log("onSuccessUpload = ", response);
+      let pic_name: any;
+      if (typeof response === 'string') {
+        pic_name = JSON.parse(response);
+      } else {
+        pic_name = response;
+      }
+
+      // let pic_name = JSON.parse(response);
+      if (pic_name.status === true) {
+        pic_name.data.productpic_path = this.imgLink + pic_name.data.productpic_path;
+        pic_name.data.flag = 'c';
+        if (this.uploadedFiles.length === 0) {
+          pic_name.data.cover = 'Y';
+          this.product.coverId = pic_name.data.id;
+        }
+        this.uploadedFiles.push(pic_name.data);
+        console.log('upload seccess');
+      } else {
+        console.log('error = ', pic_name.error);
+        this.alerts.warning('บันทึกรูปภาพไม่สำเร็จกรุณาลองใหม่อีกครั้ง');
+      }
+      this.product.productImage = '';
+      this.blockUI.stop();
+    };
+    this.uploaderService.onErrorUpload = (item, response, status, headers) => {
+      console.log('onErrorUpload = ', response);
+      this.blockUI.stop();
+    };
+    this.uploaderService.upload(myUploadItem);
+  }
+
+  public checkBeforSave() {
+    if ((this.uploadedFiles).length === 0) {
+      this.warningmsg = 'Warning!';
+      this.dialogmsg = 'You doesn\'t upload product picture. Do you want to save this product?';
+      // $('#productSaveModel').modal('show');
+    } else {
+      // this.warningmsg = "Save product";
+      // this.dialogmsg = "Are you sure that you want to save this product?";
+      // $('#productSaveModel').modal('show');
+      this.saveProduct();
+    }
+  }
+
+  public saveProduct() {
+    this.blockUI.start('Saving...');
+    if (this.uploadedFiles !== undefined && (this.uploadedFiles).length > 0) {
+      for (let i = 0; i < this.uploadedFiles.length; i++) {
+        (this.product.pic_id).push(this.uploadedFiles[i].id);
+      }
+    }
+    this.apiService
+      .post('/api/product/saveproduct', this.product)
+      .subscribe(
+        res => this.saveProductDoneAction(res),
+        error => this.saveProductErrorAction(error)
+      );
+  }
+
+  private saveProductDoneAction(res: any) {
+    console.log('res = ', res);
+    if (res.status === true) {
+      this.reset();
+      this.alerts.success('บันทึกข้อมูลสำเร็จ');
+      this.childResult.emit(1);
+    } else {
+      console.log('can\'t save ', res.error);
+      this.alerts.warning('บันทึกข้อมูลไม่สำเร็จ');
+      this.childResult.emit(0);
+    }
+    this.blockUI.stop();
+  }
+
+  private saveProductErrorAction(error: any) {
+    this.error = error.message;
+    console.log('error = ', this.error);
+    this.alerts.warning('บันทึกข้อมูลไม่สำเร็จ');
+    this.blockUI.stop();
+    this.childResult.emit(0);
+  }
+
+  onSubmit(value: any) {
+    console.log('value submit = ', value);
+  }
+
+  beforeRemoveImg(id: any, index: any) {
+    console.log('id = ', id, '  index = ', index);
+    this.imgIndex = index;
+    // $('#productImgModel').modal('show');
+  }
+
+  removeImg() {
+    console.log('index = ', this.imgIndex);
+    this.uploadedFiles.splice(this.imgIndex, 1);
+  }
+
+  setCoverPic(id: any) {
+    // console.log(id);
+    this.product.coverId = id;
+  }
+
+  checkRecommend() {
+    console.log(this.product.recommend);
+  }
+
+  public reset() {
+    this.product = {
+      id: 'create',
+      code: '',
+      name: '',
+      desc: '',
+      price: 0,
+      cost: 0,
+      pic_id: [],
+      staffid: this.product.staffid,
+      pic_ids: '',
+      category: this.categoryLists[0].id,
+      productImage: <any>null,
+      coverId: '0',
+      recommend: false
+    };
+    this.uploadedFiles = [];
   }
 
 }

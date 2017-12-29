@@ -6,5 +6,41 @@
         <span>{{product.code}}</span>
       </div>
     </div>
+    
+    <br/>
+
+    <div class="w3-row">
+      <div class="w3-col l5 m6 s12">
+        <label>Category lists</label>
+        <select class="w3-select w3-border" id="categoryList" name="categoryList" [(ngModel)]="product.category">
+          <option *ngFor="let item of categoryLists" [value]='item.value'>
+              {{item.label}}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <br/>
+
+    <div class="w3-row">
+      <div class="w3-col l5 m6 s12">
+        <label>
+					<span>Product Name</span> 
+        </label>
+        <label *ngIf="name.errors && (name.dirty || name.touched)" class="ui pointing red basic label" style="color: red;">
+          <span [hidden]="!name.errors.required">
+            * Name is required
+          </span>
+          <span [hidden]="!name.errors.minlength">
+            * Name must be at least 4 long.
+          </span>
+          <span [hidden]="!name.errors.maxlength">
+            * Name cannot be more than 20 long.
+          </span>
+        </label>
+        <input class="w3-input w3-border" type="text" id="productName" placeholder="Product Name" 
+        [(ngModel)]="product.name" name="name" #name="ngModel" required minlength="4" maxlength="20">
+      </div>
+    </div>
   </div>
 </form>

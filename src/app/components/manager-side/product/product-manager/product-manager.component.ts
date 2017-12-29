@@ -92,10 +92,10 @@ export class ProductManagerComponent implements OnInit {
             for (let i = 0; i < data.data.length; i++) {
               this.categoryLists.push({ label: data.data[i].cate_name, value: data.data[i].id });
             }
-              this.product.category = data.data[0].id;
-              if (this.product.id !== 'create') {
-                this.getProductByid(this.product.id);
-              }
+            this.product.category = data.data[0].id;
+            if (this.product.id !== 'create') {
+              this.getProductByid(this.product.id);
+            }
           } else {
               console.log('error = ', data.error);
           }

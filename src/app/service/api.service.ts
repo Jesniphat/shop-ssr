@@ -26,7 +26,7 @@ export class ApiService {
     private http: HttpClient,
     private router: Router
   ) {
-    console.log(environment);
+    // console.log(environment);
   }
 
   /** GET data from the server */

@@ -24,23 +24,77 @@
 
     <div class="w3-row">
       <div class="w3-col l5 m6 s12">
-        <label>
-					<span>Product Name</span> 
-        </label>
-        <label *ngIf="name.errors && (name.dirty || name.touched)" class="ui pointing red basic label" style="color: red;">
-          <span [hidden]="!name.errors.required">
+        <label>Product Name</label>
+        <label *ngIf="name.errors && (name.dirty || name.touched)" style="color: red;">
+          <label [hidden]="!name.errors.required">
             * Name is required
-          </span>
-          <span [hidden]="!name.errors.minlength">
+          </label>
+          <label [hidden]="!name.errors.minlength">
             * Name must be at least 4 long.
-          </span>
-          <span [hidden]="!name.errors.maxlength">
+          </label>
+          <label [hidden]="!name.errors.maxlength">
             * Name cannot be more than 20 long.
-          </span>
+          </label>
         </label>
         <input class="w3-input w3-border" type="text" id="productName" placeholder="Product Name" 
         [(ngModel)]="product.name" name="name" #name="ngModel" required minlength="4" maxlength="20">
       </div>
     </div>
+
+    <br/>
+
+    <div class="w3-row">
+      <div class="w3-col l5 m6 s12">
+        <label>Product Price</label>
+        <label [hidden]="price.valid || price.pristine" style="color: red;">
+					* Price is required
+        </label>
+        <input type="number" class="w3-input w3-border" id="productPrice" placeholder="Product price" 
+        [(ngModel)]="product.price" name="price" #price="ngModel" required />
+      </div>
+    </div>
+
+    <br/>
+
+    <div class="w3-row">
+      <div class="w3-col l5 m6 s12">
+        <label>Product Cost</label>
+        <label [hidden]="cost.valid || cost.pristine" style="color: red;">
+					Cost is required
+        </label>
+        <input type="number" class="w3-input w3-border" id="productCost" placeholder="Product cost" 
+        [(ngModel)]="product.cost" name="cost" #cost="ngModel" required />
+      </div>
+    </div>
+
+    <br/>
+
+    <div class="w3-row">
+      <div class="w3-col l5 m6 s12">
+          <label>Product Description</label>
+          <textarea class="w3-input w3-border" id="productDesc" type="text" rows="1" placeholder="Description"  
+          [(ngModel)]="product.desc" name="desc"></textarea>
+      </div>
+    </div>
+    
+    <br/>
+
+    <div class="w3-row">
+      <div class="w3-col l5 m6 s12">
+        <input class="w3-check" type="checkbox" name="recommend" [(ngModel)]="product.recommend" (change)="checkRecommend()">
+        <label>Recommend product</label>
+      </div>
+    </div>
+
+    <br/>
+
+    <div class="w3-row">
+      <div class="w3-col l5 m6 s12">
+        <label>Product image</label>
+        <input type="file" class="w3-input w3-border" id="productImage" placeholder="Product image" 
+        [(ngModel)]="product.productImage" (change)="uploadFile($event)" name="productImage" #productImage />
+      </div>
+    </div>
+
   </div>
 </form>

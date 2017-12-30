@@ -46,11 +46,11 @@ export class ManagerSideComponent implements OnInit {
     public alertsService: AlertsService,
     public $rootScope: RootscopeService
   ) {
-    const that = this;
+    // const that = this;
     // Change style of top container on scroll
-    window.onscroll = function () {
-      that.scrollFunction();
-    };
+    // window.onscroll = function () {
+    //   that.scrollFunction();
+    // };
   }
 
   /**
@@ -89,17 +89,22 @@ export class ManagerSideComponent implements OnInit {
   }
 
   /**
-   * Open Site bar
+   * Toggle between showing and hiding the sidebar, and add overlay effect
    * @access public
    * @returns void
    */
   public w3_open() {
-    document.getElementById('mySidebar').style.display = 'block';
-    document.getElementById('myOverlay').style.display = 'block';
+    if (document.getElementById('mySidebar').style.display === 'block') {
+      document.getElementById('mySidebar').style.display = 'none';
+      document.getElementById('myOverlay').style.display = 'none';
+    } else {
+      document.getElementById('mySidebar').style.display = 'block';
+      document.getElementById('myOverlay').style.display = 'block';
+    }
   }
 
   /**
-   * Close site bar
+   * Close the sidebar with the close button
    * @access public
    * @returns void
    */
@@ -108,20 +113,20 @@ export class ManagerSideComponent implements OnInit {
     document.getElementById('myOverlay').style.display = 'none';
   }
 
-  /**
-   * Scroll
-   * @access public
-   * @returns void
-   */
-  public scrollFunction() {
-    if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
-      document.getElementById('myTop').classList.add('w3-card-4', 'w3-animate-opacity');
-      document.getElementById('myIntro').classList.add('w3-show-inline-block');
-    } else {
-      document.getElementById('myIntro').classList.remove('w3-show-inline-block');
-      document.getElementById('myTop').classList.remove('w3-card-4', 'w3-animate-opacity');
-    }
-  }
+  // /**
+  //  * Scroll
+  //  * @access public
+  //  * @returns void
+  //  */
+  // public scrollFunction() {
+  //   if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+  //     document.getElementById('myTop').classList.add('w3-card-4', 'w3-animate-opacity');
+  //     document.getElementById('myIntro').classList.add('w3-show-inline-block');
+  //   } else {
+  //     document.getElementById('myIntro').classList.remove('w3-show-inline-block');
+  //     document.getElementById('myTop').classList.remove('w3-card-4', 'w3-animate-opacity');
+  //   }
+  // }
 
   /**
    * Map menu data

@@ -37,7 +37,7 @@ uploadRouter.post('/product', uploadFile.single('file'), function (req, res, nex
     if (!fs.existsSync(dirImg)) {
       fs.mkdirSync(dirImg);
     }
-    const filename = __dirname + dirImg + newName;
+    const filename = dirImg + newName;
     const src = fs.createReadStream(req.file.path);
     src.pipe(fs.createWriteStream(filename));
     src.on('end', function () {

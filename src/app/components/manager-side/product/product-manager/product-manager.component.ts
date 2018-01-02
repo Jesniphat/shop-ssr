@@ -14,16 +14,20 @@ import { BlockUI, NgBlockUI } from 'ng-block-ui';
   styleUrls: ['./product-manager.component.scss']
 })
 export class ProductManagerComponent implements OnInit {
-  // Block UI varable
-  @BlockUI() blockUI: NgBlockUI;
-
-  // Data ID from parent page
+  /**
+   * Data ID from parent page
+   */
   @Input() productId: any;
+  @Input() modelOpen: any = false;
 
-  // Sent something to parent
-  @Output() childResult: EventEmitter<number> = new EventEmitter();
+  /**
+   * Sent something to parent
+   */
+  @Output() createProductResult: EventEmitter<number> = new EventEmitter();
 
-  // Public varable
+  /**
+   * Public varable
+   */
   public error: any = '';
   public storage: any;
   public product = {
@@ -52,6 +56,16 @@ export class ProductManagerComponent implements OnInit {
   public imgIndex: any = 0;
   public dialog: any;
 
+  /**
+   * Class constructor
+   * @param router Service
+   * @param route Service
+   * @param apiService ApiService
+   * @param $rootScope RootScropeService
+   * @param uploaderService Upload Service
+   * @param _elRef DOM
+   * @param alerts Popup Service
+   */
   public constructor(
     public router: Router,
     public route: ActivatedRoute,
@@ -64,6 +78,10 @@ export class ProductManagerComponent implements OnInit {
     this.storage = localStorage;
   }
 
+  /**
+   * Start automatic fuction
+   * @access public
+   */
   public ngOnInit() {
     console.log('product_managet.component');
       this.uploadUrl = this.apiService.upl + this.uploadUrl;
@@ -73,6 +91,7 @@ export class ProductManagerComponent implements OnInit {
           this.product.staffid = logindata.id;
       }
       if (this.route.snapshot.paramMap.has('id')) {
+        this.$rootScope.changeHeaderText('Product Manager');
         this.product.id = this.route.snapshot.paramMap.get('id');
       } else {
         this.product.id = this.productId;
@@ -81,6 +100,10 @@ export class ProductManagerComponent implements OnInit {
       this.getCategoryList();
   }
 
+  /**
+   * Get category list for select box
+   * @access public
+   */
   public getCategoryList(): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
       const param = {};
@@ -107,8 +130,13 @@ export class ProductManagerComponent implements OnInit {
     });
   }
 
+  /**
+   * Get product by id
+   * @param prodId
+   * @access public
+   */
   public getProductByid(prodId: any) {
-  this.blockUI.start('Loading...');
+  this.$rootScope.setBlock(true, 'Loading...');
   const param = {
     product_id: prodId
   };
@@ -120,7 +148,12 @@ export class ProductManagerComponent implements OnInit {
     );
   }
 
-  public getProductByidDoneAction(res) {
+  /**
+   * Get productio done.
+   * @param res
+   * @access private
+   */
+  private getProductByidDoneAction(res) {
     if (res.status === true) {
       const prodResData = res.data;
       this.product.id = prodResData.id;
@@ -140,26 +173,42 @@ export class ProductManagerComponent implements OnInit {
       const pic_name = prodResData.pic;
       if (pic_name !== undefined && pic_name.length > 0) {
         for (let z = 0; z < pic_name.length; z++) {
-          pic_name[z].productpic_path = this.imgLink + pic_name[z].productpic_path;
+          pic_name[z].productpic_path = /* this.imgLink + */ pic_name[z].productpic_path;
           pic_name[z].flag = 'u';
         }
       }
       this.uploadedFiles = (pic_name === undefined) ? [] : pic_name;
     }
-    this.blockUI.stop();
+    this.$rootScope.setBlock(false);
   }
 
-  public getProductByidErrorAction(error) {
-    this.blockUI.stop();
+  /**
+   * Get product  by id error
+   * @param error
+   * @access private
+   */
+  private getProductByidErrorAction(error) {
+    this.$rootScope.setBlock(false);
+    console.log('Get product by id error ', error);
   }
 
+  /**
+   * Changer category
+   * @param newValue
+   * @access public
+   */
   public changeCategory(newValue: any) {
     console.log(newValue);
     this.product.category = newValue;
   }
 
+  /**
+   * Upload file photo
+   * @param data
+   * @access public
+   */
   public uploadFile(data: any) {
-    this.blockUI.start('Uploading...');
+    this.$rootScope.setBlock(true, 'Uploading...');
     console.log('file = ', data.target.files[0]);
     const uploadFile = data.target.files[0];
 
@@ -177,7 +226,7 @@ export class ProductManagerComponent implements OnInit {
 
       // let pic_name = JSON.parse(response);
       if (pic_name.status === true) {
-        pic_name.data.productpic_path = this.imgLink + pic_name.data.productpic_path;
+        pic_name.data.productpic_path = /* this.imgLink + */ pic_name.data.productpic_path;
         pic_name.data.flag = 'c';
         if (this.uploadedFiles.length === 0) {
           pic_name.data.cover = 'Y';
@@ -190,15 +239,19 @@ export class ProductManagerComponent implements OnInit {
         this.alerts.warning('บันทึกรูปภาพไม่สำเร็จกรุณาลองใหม่อีกครั้ง');
       }
       this.product.productImage = '';
-      this.blockUI.stop();
+      this.$rootScope.setBlock(false);
     };
     this.uploaderService.onErrorUpload = (item, response, status, headers) => {
       console.log('onErrorUpload = ', response);
-      this.blockUI.stop();
+      this.$rootScope.setBlock(false);
     };
     this.uploaderService.upload(myUploadItem);
   }
 
+  /**
+   * Check before save
+   * @access public
+   */
   public checkBeforSave() {
     if ((this.uploadedFiles).length === 0) {
       this.warningmsg = 'Warning!';
@@ -212,67 +265,133 @@ export class ProductManagerComponent implements OnInit {
     }
   }
 
+  /**
+   * Save product
+   * @access public
+   */
   public saveProduct() {
-    this.blockUI.start('Saving...');
+    this.$rootScope.setBlock(true, 'Saving...');
     if (this.uploadedFiles !== undefined && (this.uploadedFiles).length > 0) {
       for (let i = 0; i < this.uploadedFiles.length; i++) {
         (this.product.pic_id).push(this.uploadedFiles[i].id);
       }
     }
-    this.apiService
-      .post('/api/product/saveproduct', this.product)
+    if (this.product.id === 'create') {
+      this.apiService
+      .post('/api/product', this.product)
       .subscribe(
         res => this.saveProductDoneAction(res),
         error => this.saveProductErrorAction(error)
       );
+    } else {
+      this.apiService
+      .put('/api/product', this.product)
+      .subscribe(
+        res => this.saveProductDoneAction(res),
+        error => this.saveProductErrorAction(error)
+      );
+    }
   }
 
+  /**
+   * Save product done action
+   * @param res
+   * @access private
+   */
   private saveProductDoneAction(res: any) {
     console.log('res = ', res);
     if (res.status === true) {
       this.reset();
       this.alerts.success('บันทึกข้อมูลสำเร็จ');
-      this.childResult.emit(1);
+      this.createProductResult.emit(1);
     } else {
       console.log('can\'t save ', res.error);
       this.alerts.warning('บันทึกข้อมูลไม่สำเร็จ');
-      this.childResult.emit(0);
+      this.createProductResult.emit(0);
     }
-    this.blockUI.stop();
+    this.$rootScope.setBlock(false);
   }
 
+
+  /**
+   * Save product error
+   * @param error
+   * @access private
+   */
   private saveProductErrorAction(error: any) {
     this.error = error.message;
     console.log('error = ', this.error);
     this.alerts.warning('บันทึกข้อมูลไม่สำเร็จ');
-    this.blockUI.stop();
-    this.childResult.emit(0);
+    this.$rootScope.setBlock(false);
+    this.createProductResult.emit(0);
   }
 
-  onSubmit(value: any) {
+  /**
+   * Submit
+   * @param value
+   * @access public
+   */
+  public onSubmit(value: any) {
     console.log('value submit = ', value);
   }
 
-  beforeRemoveImg(id: any, index: any) {
+  /**
+   * Before remove product img.
+   * @param id
+   * @param index
+   * @access public
+   */
+  public beforeRemoveImg(id: any, index: any) {
     console.log('id = ', id, '  index = ', index);
     this.imgIndex = index;
     // $('#productImgModel').modal('show');
   }
 
-  removeImg() {
+  /**
+   * Remove img.
+   * @param id
+   * @param index
+   * @access public
+   */
+  public removeImg(id: any = null, index: any = null) {
+    if (index) {
+      this.imgIndex = index;
+    }
     console.log('index = ', this.imgIndex);
     this.uploadedFiles.splice(this.imgIndex, 1);
   }
 
-  setCoverPic(id: any) {
+  /**
+   * Set cover pic
+   * @param id
+   * @access public
+   */
+  public setCoverPic(id: any) {
     // console.log(id);
     this.product.coverId = id;
   }
 
-  checkRecommend() {
-    console.log(this.product.recommend);
+  /**
+   * Check recommend
+   * @access public
+   */
+  public checkRecommend() {
+    // console.log(this.product.recommend);
   }
 
+  /**
+   * Close by click cancel bt.
+   * @access public
+   */
+  public close() {
+    this.reset();
+    this.createProductResult.emit(1);
+  }
+
+  /**
+   * Reset function
+   * @access public
+   */
   public reset() {
     this.product = {
       id: 'create',

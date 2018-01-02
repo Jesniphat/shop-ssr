@@ -3,8 +3,10 @@ import { BrowserModule, Meta, Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { ApiService } from '../../../../service/api.service';
 import { RootscopeService } from '../../../../service/rootscope.service';
-// import { ProductManageComponent } from '../product-manage/product-manage.component';
+
 import { ProductStorageService } from '../../../../service/product-storage.service';
+
+import { ProductManagerComponent } from '../product-manager/product-manager.component';
 
 @Component({
   selector: 'app-product-list',
@@ -12,7 +14,11 @@ import { ProductStorageService } from '../../../../service/product-storage.servi
   styleUrls: ['./product-list.component.scss']
 })
 export class ProductListComponent implements OnInit {
-  // @ViewChild(ProductManageComponent) public productManageComponent: ProductManageComponent;
+  /**
+	 * Set view child from product manage
+	 */
+  @ViewChild(ProductManagerComponent) public productManagerComponent: ProductManagerComponent;
+
   public error: any;
   public categoryLists = [];
   public productLists: any = [];
@@ -141,13 +147,13 @@ export class ProductListComponent implements OnInit {
     // }
     // this.router.navigate(link);
     console.log('add new prod');
-    // this.dialog.showModal();
+    document.getElementById('addproductmodel').style.display = 'block';
     if (data === 'create') {
       this.productId = data;
-      // this.productManageComponent.reset();
+      this.productManagerComponent.reset();
     } else {
       this.productId = data.id;
-      // this.productManageComponent.getProductByid(data.id);
+      this.productManagerComponent.getProductByid(data.id);
     }
   }
 
@@ -203,10 +209,10 @@ export class ProductListComponent implements OnInit {
    * @access public
    * @returns void
    */
-  public childReturn(result) {
+  public createProductResult(result) {
     if (result) {
       this.getAllProduct();
-      // this.dialog.close();
+      document.getElementById('addproductmodel').style.display = 'none';
     } else {
       console.log('can\'t save');
     }

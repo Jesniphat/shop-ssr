@@ -146,8 +146,12 @@ export class ManagerSideComponent implements OnInit {
  */
   public block(obj: any) {
     if (obj.block === true && obj.block !== undefined) {
-      this.blockUI.start('Loading...');
-    }else {
+      if (obj.text) {
+        this.blockUI.start(obj.text);
+      } else {
+        this.blockUI.start('Loading...');
+      }
+    } else {
       this.blockUI.stop();
     }
   }

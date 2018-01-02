@@ -25,9 +25,10 @@ export class RootscopeService {
     this._showNav.next(someObj);
   }
 
-  public setBlock(data: boolean) {
+  public setBlock(data: boolean, text: string = '') {
     this._blockUI.next({
-      block: data
+      block: data,
+      text: text
     });
   }
 

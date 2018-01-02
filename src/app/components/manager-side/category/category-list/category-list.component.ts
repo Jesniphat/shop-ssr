@@ -25,7 +25,7 @@ export class CategoryListComponent implements OnInit {
   public dialog;
 
   /**
-	 * Set view child from product manage
+	 * Set view child from category manage
 	 */
   @ViewChild(TableElementComponent) private tableElementComponent: TableElementComponent;
   @ViewChild(CategoryManagerComponent) private categoryManagerComponent: CategoryManagerComponent;

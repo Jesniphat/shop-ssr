@@ -65,7 +65,7 @@ export class CategoryManagerComponent implements OnInit {
     this.imgLink = this.apiService.img;
 
     if (this.route.snapshot.paramMap.has('id')) {
-      this.$rootscope.changeHeaderText('category manager');
+      this.$rootscope.changeHeaderText('Category Manager');
       this.cate.cateId = this.route.snapshot.paramMap.get('id');
     } else {
       this.cate.cateId = this.categoryId;
@@ -99,15 +99,11 @@ export class CategoryManagerComponent implements OnInit {
     } else {
       console.log('No data');
     }
-    // this.blockUI.stop();
-    // this.$rootscope.setBlock(false);
   }
 
   public getCategoryByidErrorAction(error: any) {
     this.error = error.message;
     console.log('error = ', this.error);
-    // this.$rootscope.setBlock(false);
-    // this.blockUI.stop();
   }
 
   public changeStatus(newValue: any) {
@@ -169,6 +165,7 @@ export class CategoryManagerComponent implements OnInit {
   }
 
   public close() {
+    this.reset();
     this.createCateResult.emit(1);
   }
 

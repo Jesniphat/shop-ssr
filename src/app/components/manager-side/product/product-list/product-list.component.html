@@ -22,7 +22,7 @@
         <img [src]="imgLink + item.img" style="width:100%">
         <span class="w3-tag w3-display-topleft" *ngIf="item.recommend=='Y'">Recommend</span>
         <div class="w3-display-middle w3-display-hover">
-          <button class="w3-button w3-black">Edit <i class="fas fa-edit"></i></button>
+          <button class="w3-button w3-black" (click)="add_new_product(item)">Edit <i class="fas fa-edit"></i></button>
         </div>
       </div>
       <p>{{item.product_name}}<br><b>฿{{item.product_cost}}</b></p>
@@ -38,4 +38,10 @@
   </div>
   <br/>
   <hr/>
+</div>
+
+<div id="addproductmodel" class="w3-modal">
+  <div id="producct-model-content" class="w3-modal-content w3-card-4 w3-animate-zoom">
+    <app-product-manager [productId]="productId" [modelOpen] = 'true' (createProductResult)="createProductResult($event)"></app-product-manager>
+  </div>
 </div>

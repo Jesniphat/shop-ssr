@@ -429,7 +429,7 @@ productRouter.post('/', (req, res, next) => {
   };
 
   db.beginTransection(connection)
-  .then(gencode)
+  .then(getCode)
   .then(saveProduct)
   .then(product_pic_manage)
   .then(product_recommend)

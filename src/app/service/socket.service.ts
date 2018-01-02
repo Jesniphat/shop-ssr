@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { AlertsService } from './alerts.service';
@@ -23,51 +24,60 @@ export class SocketService {
    */
   private _socketGetData: any;
 
-  constructor(public alerts: AlertsService) {
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: object, // Get platform is cliend and server
+    public alerts: AlertsService
+  ) {
     // Build Observe data
     this.socketGetData$ = new Observable(observer => this._socketGetData = observer);
 
     // Receive data from socket server
-    this.loginData = JSON.parse(localStorage.getItem('logindata'));
+    // this.loginData = JSON.parse(localStorage.getItem('logindata'));
+    if (isPlatformBrowser(this.platformId)) {
+      // Do something if want to use only cliend site.
+      this.loginData = JSON.parse(localStorage.getItem('logindata'));
+    }
     if (this.loginData !== null) {
-      if (this.loginData.type === 'admin') {
-        this.socket.on('admin', function (data) {
-          if (data.loginData.display_name !== this.loginData.display_name) {
-            this.alertsSocket(data.message);
-          }
-        }.bind(this));
+      if (isPlatformBrowser(this.platformId)) {
+        if (this.loginData.type === 'admin') {
+          this.socket.on('admin', function (data) {
+            if (data.loginData.display_name !== this.loginData.display_name) {
+              this.alertsSocket(data.message);
+            }
+          }.bind(this));
 
-        this.socket.on('staff', function (data) {
-          // console.log('socker data', data);
-          if (data.loginData.display_name !== this.loginData.display_name) {
-            this.alertsSocket(data.message);
-          }
-        }.bind(this));
+          this.socket.on('staff', function (data) {
+            // console.log('socker data', data);
+            if (data.loginData.display_name !== this.loginData.display_name) {
+              this.alertsSocket(data.message);
+            }
+          }.bind(this));
 
-        this.socket.on('customer', function (data) {
-          if (data.loginData.display_name !== this.loginData.display_name) {
-            this.alertsSocket(data.message);
-          }
-        }.bind(this));
-      } else if (this.loginData.type === 'staff') {
-        this.socket.on('staff', function (data) {
-          // console.log('socker data', data);
-          if (data.loginData.display_name !== this.loginData.display_name) {
-            this.alertsSocket(data.message);
-          }
-        }.bind(this));
+          this.socket.on('customer', function (data) {
+            if (data.loginData.display_name !== this.loginData.display_name) {
+              this.alertsSocket(data.message);
+            }
+          }.bind(this));
+        } else if (this.loginData.type === 'staff') {
+          this.socket.on('staff', function (data) {
+            // console.log('socker data', data);
+            if (data.loginData.display_name !== this.loginData.display_name) {
+              this.alertsSocket(data.message);
+            }
+          }.bind(this));
 
-        this.socket.on('customer', function (data) {
-          if (data.loginData.display_name !== this.loginData.display_name) {
-            this.alertsSocket(data.message);
-          }
-        }.bind(this));
-      } else {
-        this.socket.on('customer', function (data) {
-          if (data.loginData.display_name !== this.loginData.display_name) {
-            this.alertsSocket(data.message);
-          }
-        }.bind(this));
+          this.socket.on('customer', function (data) {
+            if (data.loginData.display_name !== this.loginData.display_name) {
+              this.alertsSocket(data.message);
+            }
+          }.bind(this));
+        } else {
+          this.socket.on('customer', function (data) {
+            if (data.loginData.display_name !== this.loginData.display_name) {
+              this.alertsSocket(data.message);
+            }
+          }.bind(this));
+        }
       }
     }
   }

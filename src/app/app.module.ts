@@ -1,10 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, PLATFORM_ID, APP_ID, Inject } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 
+// Page import
 import { SharedModule } from './shared/shared.module';
 import { Routing } from './app.routing';
 

@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, ElementRef, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, Output, EventEmitter, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../../../service/api.service';
 import { RootscopeService } from '../../../../service/rootscope.service';
@@ -67,6 +68,7 @@ export class ProductManagerComponent implements OnInit {
    * @param alerts Popup Service
    */
   public constructor(
+    @Inject(PLATFORM_ID) private platformId: object, // Get platform is cliend and server
     public router: Router,
     public route: ActivatedRoute,
     public apiService: ApiService,
@@ -75,7 +77,7 @@ export class ProductManagerComponent implements OnInit {
     public _elRef: ElementRef,
     public alerts: AlertsService
   ) {
-    this.storage = localStorage;
+    // this.storage = localStorage;
   }
 
   /**
@@ -84,6 +86,10 @@ export class ProductManagerComponent implements OnInit {
    */
   public ngOnInit() {
     console.log('product_managet.component');
+    if (isPlatformBrowser(this.platformId)) {
+      // Do something if want to use only cliend site.
+      this.storage = localStorage;
+    }
       this.uploadUrl = this.apiService.upl + this.uploadUrl;
       this.imgLink = this.apiService.img;
       if (this.storage.getItem('logindata')) {

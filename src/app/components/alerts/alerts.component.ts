@@ -1,4 +1,5 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, Inject, PLATFORM_ID} from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { AlertsService } from '../../service/alerts.service';
 
 @Component({
@@ -14,7 +15,10 @@ export class AlertsComponent implements OnInit {
 
   public message: any = '';
 
-  constructor(private alertsService: AlertsService) { }
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: object, // Get platform is cliend and server
+    private alertsService: AlertsService
+  ) { }
 
   ngOnInit() {
     this.alertsService.alerts$.subscribe(data => this.setAlerts(data));

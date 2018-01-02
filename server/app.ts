@@ -28,7 +28,7 @@ enableProdMode();
 // Express server
 const app: express.Application = express();
 
-const PORT = process.env.PORT || 8000;
+// const PORT = process.env.PORT || 8000;
 const DIST_FOLDER = join(process.cwd(), 'dist');
 
 let template = '';
@@ -40,7 +40,17 @@ if (process.env.PROD === 'production') {
 // * NOTE :: leave this as require() since this file is built Dynamically from webpack
 const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require('../dist/ssr/main.bundle');
 
+// Express Engine
+import { ngExpressEngine } from '@nguniversal/express-engine';
+
 const { provideModuleMap } = require('@nguniversal/module-map-ngfactory-loader');
+
+// app.engine('html', ngExpressEngine({
+//   bootstrap: AppServerModuleNgFactory,
+//   providers: [
+//     provideModuleMap(LAZY_MODULE_MAP)
+//   ]
+// }));
 
 app.engine('html', (_, options, callback) => {
   renderModuleFactory(AppServerModuleNgFactory, {
@@ -77,6 +87,11 @@ app.use('/api/user', usersRouter);
 
 // Server static files from /public
 app.use('/public', express.static(join(DIST_FOLDER, 'public')));
+
+// TODO: implement data requests securely
+app.get('/api/*', (req, res) => {
+  res.status(404).send('data requests are not supported');
+});
 
 // Server static files from /browser
 app.get('*', express.static(join(DIST_FOLDER, 'browser')));

@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, ElementRef, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, Output, EventEmitter, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Uploader } from 'angular2-http-file-upload';
 import { MyUploadItem } from '../../../../upload-item';
@@ -49,6 +50,7 @@ export class CategoryManagerComponent implements OnInit {
                         { label: 'Unactive', value: 'N' }];
 
   public constructor(
+    @Inject(PLATFORM_ID) private platformId: object, // Get platform is cliend and server
     public router: Router,
     public route: ActivatedRoute,
     public uploaderService: Uploader,
@@ -61,7 +63,11 @@ export class CategoryManagerComponent implements OnInit {
 
   public ngOnInit() {
     console.log('category_managet.component');
-    this.locinData = JSON.parse(localStorage.getItem('logindata'));
+    // this.locinData = JSON.parse(localStorage.getItem('logindata'));
+    if (isPlatformBrowser(this.platformId)) {
+      // Do something if want to use only cliend site.
+      this.locinData = JSON.parse(localStorage.getItem('logindata'));
+    }
     this.imgLink = this.apiService.img;
 
     if (this.route.snapshot.paramMap.has('id')) {

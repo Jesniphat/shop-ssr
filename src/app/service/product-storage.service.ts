@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 import { ApiService } from './api.service';
 
@@ -28,7 +29,10 @@ export class ProductStorageService {
  * @access public
  * @return void
  */
-  public constructor(public apiService: ApiService) {
+  public constructor(
+    public apiService: ApiService,
+    @Inject(PLATFORM_ID) private platformId: object, // Get platform is cliend and server
+  ) {
     this.$productList = new Observable(observer => this._producList = observer);
   }
 
@@ -86,7 +90,12 @@ export class ProductStorageService {
    * @access public
    */
   public getProductList(param): Promise<any> {
-   const storage = localStorage;
+  //  const storage = localStorage;
+    let storage: any ;
+    if (isPlatformBrowser(this.platformId)) {
+      // Do something if want to use only cliend site.
+      storage = localStorage;
+    }
    let productList = [];
     // Get data from local storage
     if (storage.getItem('productlist')) {
@@ -159,7 +168,11 @@ export class ProductStorageService {
    * @return productList
    */
   public deleteProductStore(product: any) {
-    const storage = localStorage;
+    let storage: any;
+    if (isPlatformBrowser(this.platformId)) {
+      // Do something if want to use only cliend site.
+      storage = localStorage;
+    }
     let productList = [];
     // Get data from local storage
     if (storage.getItem('productlist')) {

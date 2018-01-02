@@ -32,15 +32,14 @@ export class ManagerLoginComponent implements OnInit {
       { name: 'keywords', content: 'jesse shop online, angular 5 universal, etc'},
       { name: 'description', content: 'This is my Angular SEO-based App, enjoy it!' }
     ]);
-
-    this.storage = localStorage;
   }
 
   ngOnInit() {
     // Use only cliend site.
-    // if (isPlatformBrowser(this.platformId)) {
-    //   // Do something if want to use only cliend site.
-    // }
+    if (isPlatformBrowser(this.platformId)) {
+      // Do something if want to use only cliend site.
+      this.storage = localStorage;
+    }
 
     // Get login and clear cookie user.
     this.getLogin();
